@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charity.dao.DonorDao">
+
+    <resultMap type="com.charity.entity.Donor" id="DonorMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="career" column="career" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="birthday" column="birthday" jdbcType="OTHER"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="tel" column="tel" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="DonorMap">
+        select
+          id, user_id, career, email, sex, birthday, address, tel
+        from charity.donor
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="DonorMap">
+        select
+          id, user_id, career, email, sex, birthday, address, tel
+        from charity.donor
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="DonorMap">
+        select
+          id, user_id, career, email, sex, birthday, address, tel
+        from charity.donor
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="career != null and career != ''">
+                and career = #{career}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="birthday != null">
+                and birthday = #{birthday}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="tel != null">
+                and tel = #{tel}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into charity.donor(user_id, career, email, sex, birthday, address, tel)
+        values (#{userId}, #{career}, #{email}, #{sex}, #{birthday}, #{address}, #{tel})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update charity.donor
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="career != null and career != ''">
+                career = #{career},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="tel != null">
+                tel = #{tel},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from charity.donor where id = #{id}
+    </delete>
+
+    <!--查询捐赠者数-->
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from donor
+    </select>
+
+</mapper>

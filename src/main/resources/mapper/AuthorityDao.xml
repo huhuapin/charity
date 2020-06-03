@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charity.dao.AuthorityDao">
+
+    <resultMap type="com.charity.entity.Authority" id="AuthorityMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="found" column="found" jdbcType="INTEGER"/>
+        <result property="people" column="people" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="OTHER"/>
+        <result property="tel" column="tel" jdbcType="INTEGER"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="represent" column="represent" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="AuthorityMap">
+        select
+          id, user_id, found, people, description, tel, address, represent, created_time, status
+        from charity.authority
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="AuthorityMap">
+        select
+          id, user_id, found, people, description, tel, address, represent, created_time, status
+        from charity.authority
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll"  resultType="java.util.Map">
+        select
+          user.id, name, last_login,user_id, found, people, description, tel, address, represent, created_time, status
+        from charity.authority,charity.user
+        <where>
+            authority.user_id = user.id
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="found != null">
+                and found = #{found}
+            </if>
+            <if test="people != null">
+                and people = #{people}
+            </if>
+            <if test="description != null">
+                and description = #{description}
+            </if>
+            <if test="tel != null">
+                and tel = #{tel}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="represent != null and represent != ''">
+                and represent = #{represent}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+
+    <!--通过name作为筛选条件查询-->
+    <select id="queryByName"  resultType="java.util.Map">
+        select
+        user.id, name, last_login,user_id, found, people, description, tel, address, represent, created_time, status
+        from charity.authority,charity.user
+        where authority.user_id = user.id and user.name like concat('%',#{name},'%')
+    </select>
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into charity.authority(user_id, found, people, description, tel, address, represent, created_time, status)
+        values (#{userId}, #{found}, #{people}, #{description}, #{tel}, #{address}, #{represent}, #{createdTime}, #{status})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update charity.authority
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="found != null">
+                found = #{found},
+            </if>
+            <if test="people != null">
+                people = #{people},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="tel != null">
+                tel = #{tel},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="represent != null and represent != ''">
+                represent = #{represent},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from charity.authority where id = #{id}
+    </delete>
+
+    <!--查询慈善机构数-->
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from authority
+    </select>
+
+<!--    查询全部资金数-->
+    <select id="totalFound" resultType="java.lang.Double">
+        select sum(found) from authority
+    </select>
+</mapper>

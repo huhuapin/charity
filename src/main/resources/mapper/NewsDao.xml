@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charity.dao.NewsDao">
+
+    <resultMap type="com.charity.entity.News" id="NewsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="authorityId" column="authority_id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="thumb" column="thumb" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="OTHER"/>
+        <result property="time" column="time" jdbcType="TIMESTAMP"/>
+        <result property="click" column="click" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="NewsMap">
+        select
+          id, authority_id, title, description, thumb, content, time, click
+        from charity.news
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="NewsMap">
+        select
+          id, authority_id, title, description, thumb, content, time, click
+        from charity.news
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="NewsMap">
+        select
+          id, authority_id, title, description, thumb, content, time, click
+        from charity.news
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="authorityId != null">
+                and authority_id = #{authorityId}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="thumb != null and thumb != ''">
+                and thumb = #{thumb}
+            </if>
+            <if test="content != null">
+                and content = #{content}
+            </if>
+            <if test="time != null">
+                and time = #{time}
+            </if>
+            <if test="click != null">
+                and click = #{click}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into charity.news(authority_id, title, description, thumb, content, time, click)
+        values (#{authorityId}, #{title}, #{description}, #{thumb}, #{content}, #{time}, #{click})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update charity.news
+        <set>
+            <if test="authorityId != null">
+                authority_id = #{authorityId},
+            </if>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="thumb != null and thumb != ''">
+                thumb = #{thumb},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="time != null">
+                time = #{time},
+            </if>
+            <if test="click != null">
+                click = #{click},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from charity.news where id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.charity.dao.ApplicationDao">
+
+    <resultMap type="com.charity.entity.Application" id="ApplicationMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="autorityId" column="autority_id" jdbcType="INTEGER"/>
+        <result property="doneeId" column="donee_id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="OTHER"/>
+        <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
+        <result property="img" column="img" jdbcType="VARCHAR"/>
+        <result property="target" column="target" jdbcType="NUMERIC"/>
+        <result property="donoorNum" column="donoor_num" jdbcType="INTEGER"/>
+        <result property="start" column="start" jdbcType="TIMESTAMP"/>
+        <result property="end" column="end" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="urgent" column="urgent" jdbcType="INTEGER"/>
+        <result property="receive" column="receive" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ApplicationMap">
+        select
+          id, autority_id, donee_id, title, description, category_id, img, target, donoor_num, start, end, status, urgent, receive
+        from charity.application
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ApplicationMap">
+        select
+          id, autority_id, donee_id, title, description, category_id, img, target, donoor_num, start, end, status, urgent, receive
+        from charity.application
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ApplicationMap">
+        select
+          id, autority_id, donee_id, title, description, category_id, img, target, donoor_num, start, end, status, urgent, receive
+        from charity.application
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="autorityId != null">
+                and autority_id = #{autorityId}
+            </if>
+            <if test="doneeId != null">
+                and donee_id = #{doneeId}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="description != null">
+                and description = #{description}
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="img != null and img != ''">
+                and img = #{img}
+            </if>
+            <if test="target != null">
+                and target = #{target}
+            </if>
+            <if test="donoorNum != null">
+                and donoor_num = #{donoorNum}
+            </if>
+            <if test="start != null">
+                and start = #{start}
+            </if>
+            <if test="end != null">
+                and end = #{end}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="urgent != null">
+                and urgent = #{urgent}
+            </if>
+            <if test="receive != null">
+                and receive = #{receive}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into charity.application(autority_id, donee_id, title, description, category_id, img, target, donoor_num, start, end, status, urgent, receive)
+        values (#{autorityId}, #{doneeId}, #{title}, #{description}, #{categoryId}, #{img}, #{target}, #{donoorNum}, #{start}, #{end}, #{status}, #{urgent}, #{receive})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update charity.application
+        <set>
+            <if test="autorityId != null">
+                autority_id = #{autorityId},
+            </if>
+            <if test="doneeId != null">
+                donee_id = #{doneeId},
+            </if>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="categoryId != null">
+                category_id = #{categoryId},
+            </if>
+            <if test="img != null and img != ''">
+                img = #{img},
+            </if>
+            <if test="target != null">
+                target = #{target},
+            </if>
+            <if test="donoorNum != null">
+                donoor_num = #{donoorNum},
+            </if>
+            <if test="start != null">
+                start = #{start},
+            </if>
+            <if test="end != null">
+                end = #{end},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="urgent != null">
+                urgent = #{urgent},
+            </if>
+            <if test="receive != null">
+                receive = #{receive},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from charity.application where id = #{id}
+    </delete>
+
+
+    <!--查询申请数-->
+    <select id="aaa" resultType="java.lang.Integer">
+        select count(*) from authority
+    </select>
+
+</mapper>
