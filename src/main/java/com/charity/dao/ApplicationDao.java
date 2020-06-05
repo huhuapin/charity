@@ -3,6 +3,7 @@ package com.charity.dao;
 import com.charity.entity.Application;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Application)表数据库访问层
@@ -29,6 +30,7 @@ public interface ApplicationDao {
      */
     List<Application> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
+    List<Application> query();
 
     /**
      * 通过实体作为筛选条件查询
@@ -36,7 +38,7 @@ public interface ApplicationDao {
      * @param application 实例对象
      * @return 对象列表
      */
-    List<Application> queryAll(Application application);
+    List<Map<String,Object>> queryAll(Application application);
 
     /**
      * 新增数据
@@ -62,4 +64,5 @@ public interface ApplicationDao {
      */
     int deleteById(Integer id);
 
+    int count(Application application);
 }

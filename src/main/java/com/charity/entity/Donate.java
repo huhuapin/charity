@@ -7,10 +7,10 @@ import java.io.Serializable;
  * (Donate)实体类
  *
  * @author hhp
- * @since 2020-05-31 16:07:42
+ * @since 2020-06-03 21:38:31
  */
 public class Donate implements Serializable {
-    private static final long serialVersionUID = 464521715200139962L;
+    private static final long serialVersionUID = -96459347600586647L;
     
     private Integer id;
     
@@ -31,6 +31,8 @@ public class Donate implements Serializable {
     private Date date;
     
     private Integer status;
+    
+    private Integer authorityId;
 
 
     public Integer getId() {
@@ -103,6 +105,14 @@ public class Donate implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getAuthorityId() {
+        return authorityId;
+    }
+
+    public void setAuthorityId(Integer authorityId) {
+        this.authorityId = authorityId;
     }
 
 }

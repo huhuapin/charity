@@ -18,34 +18,20 @@
         <div class="layadmin-tabsbody-item layui-show">
             <div class="layui-fluid">
                 <div class="layui-row layui-col-space15">
-                    <div class="layui-col-sm6 layui-col-md3">
-                        <div class="layui-card">
-                            <div class="layui-card-header">
-                                访问量
-                                <span class="layui-badge layui-bg-cyan layuiadmin-badge">总</span>
-                            </div>
-                            <div class="layui-card-body layuiadmin-card-list">
-                                <p class="layuiadmin-big-font">9,999,666</p>
-                                <p>
-                                    总计访问量
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-col-sm6 layui-col-md3">
-                        <div class="layui-card">
-                            <div class="layui-card-header">
-                                今日捐赠
-                                <span class="layui-badge layui-bg-cyan layuiadmin-badge">总</span>
-                            </div>
-                            <div class="layui-card-body layuiadmin-card-list">
-                                <p class="layuiadmin-big-font">33,555</p>
-                                <p>
-                                    今日捐赠金额
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+<%--                    <div class="layui-col-sm6 layui-col-md3">--%>
+<%--                        <div class="layui-card">--%>
+<%--                            <div class="layui-card-header">--%>
+<%--                                访问量--%>
+<%--                                <span class="layui-badge layui-bg-cyan layuiadmin-badge">总</span>--%>
+<%--                            </div>--%>
+<%--                            <div class="layui-card-body layuiadmin-card-list">--%>
+<%--                                <p class="layuiadmin-big-font">9,999,666</p>--%>
+<%--                                <p>--%>
+<%--                                    总计访问量--%>
+<%--                                </p>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
                     <div class="layui-col-sm6 layui-col-md3">
                         <div class="layui-card">
                             <div class="layui-card-header">
@@ -54,7 +40,7 @@
                             </div>
                             <div class="layui-card-body layuiadmin-card-list">
 
-                                <p class="layuiadmin-big-font">66,666</p>
+                                <p class="layuiadmin-big-font">${doneeCount}</p>
                                 <p>
                                     受赠用户数
                                 </p>
@@ -69,7 +55,7 @@
                             </div>
                             <div class="layui-card-body layuiadmin-card-list">
 
-                                <p class="layuiadmin-big-font">66,666</p>
+                                <p class="layuiadmin-big-font">${totalFound}</p>
                                 <p>
                                     总资金规模
                                 </p>
@@ -84,7 +70,7 @@
                             </div>
                             <div class="layui-card-body layuiadmin-card-list">
 
-                                <p class="layuiadmin-big-font">66,666</p>
+                                <p class="layuiadmin-big-font">${todayMoney}</p>
                                 <p>
                                     今日捐赠金额
                                 </p>
@@ -94,14 +80,14 @@
                     <div class="layui-col-sm6 layui-col-md3">
                         <div class="layui-card">
                             <div class="layui-card-header">
-                                今日捐赠申请
+                                捐赠申请
                                 <span class="layui-badge layui-bg-red layuiadmin-badge">个</span>
                             </div>
                             <div class="layui-card-body layuiadmin-card-list">
 
-                                <p class="layuiadmin-big-font">66,666</p>
+                                <p class="layuiadmin-big-font">${applicationCount}</p>
                                 <p>
-                                    今日捐赠申请数
+                                    总捐赠申请数
                                 </p>
                             </div>
                         </div>
@@ -138,8 +124,33 @@
     </script>
     <script src="${pageContext.request.contextPath}/js/echarts.js"></script>
     <script>
+        function getStandDate(relative) {
+            var datetime = new Date(new Date().getTime()-24*60*60*1000*relative);
+            var year = datetime.getFullYear()
+            var month = datetime.getMonth() + 1;
+            month = month < 10 ? '0'+month : month;
+            var day = datetime.getDate() < 10 ? '0'+datetime.getDate() : datetime.getDate();
+            var now = year + '-' + month + '-' +day;
+            return now
+        }
         var myChart = echarts.init(document.getElementById('LAY-index-dataview'));
-
+        var s = ${moneyDay};
+        var arrDay = [];
+        var arrMoney = [];
+        for (let i = 0; i < 7; i++) {
+            var aday = getStandDate(i)
+            arrDay.unshift(aday)
+            var flag = 0
+            s.forEach(function (d) {
+                if (d.date == aday) {
+                    flag = 1;
+                    arrMoney.unshift(d.money)
+                }
+            })
+            if (flag == 0) {
+                arrMoney.unshift(0)
+            }
+        }
         var option = {
             title: {
                 text: '近七日捐赠金额'
@@ -151,7 +162,7 @@
             xAxis: {
                 type: "category",
                 boundaryGap: !1,
-                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                data: arrDay
             },
             yAxis: {type:"value"},
 
@@ -160,7 +171,7 @@
                 type: 'line',
                 smooth: !0,
                 itemStyle: {normal: {areaStyle: {type: "default"}}},
-                data: [5, 20, 36, 10, 10, 20]
+                data: arrMoney
             }]
 
         };
@@ -168,5 +179,6 @@
         myChart.setOption(option);
         window.onresize = myChart.resize;
     </script>
+
 </body>
 </html>

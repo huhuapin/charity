@@ -14,8 +14,8 @@ public class Application implements Serializable {
     
     private Integer id;
     
-    private Integer autorityId;
-    
+    private Integer authorityId;
+
     private Integer doneeId;
     
     private String title;
@@ -36,7 +36,7 @@ public class Application implements Serializable {
 
     private double W;
     /**
-    * 待审核0，未开始1，进行中,2，待处理3，已完成4，未通过5
+    * 待审核0，未开始1，进行中,2，待处理3，已完成4，未通过5 ,
     */
     private Integer status;
     
@@ -53,12 +53,12 @@ public class Application implements Serializable {
         this.id = id;
     }
 
-    public Integer getAutorityId() {
-        return autorityId;
+    public Integer getAuthorityId() {
+        return authorityId;
     }
 
-    public void setAutorityId(Integer autorityId) {
-        this.autorityId = autorityId;
+    public void setAuthorityId(Integer authorityId) {
+        this.authorityId = authorityId;
     }
 
     public Integer getDoneeId() {

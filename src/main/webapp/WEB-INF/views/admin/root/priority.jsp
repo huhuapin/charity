@@ -41,11 +41,20 @@
                 </div>
 
                 <div class="layui-card-body">
-                    <div style="padding-bottom: 10px;">
-                        <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
+                    <div class="layui-tab layui-tab-brief layadmin-latestData">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">待审核</li>
+                            <li>已审核</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <table id="LAY-index-wait"></table>
+                            </div>
+                            <div class="layui-tab-item">
+                                <table id="LAY-index-finish"></table>
+                            </div>
+                        </div>
                     </div>
-
-                    <table id="LAY-app-content-list" lay-filter="LAY-app-content-list"></table>
                 </div>
             </div>
         </div>
@@ -62,41 +71,65 @@
             , $ = layui.$
             , form = layui.form;
 
-        //监听搜索
-        form.on('submit(LAY-app-contlist-search)', function (data) {
-            var field = data.field;
-            //执行重载
-            table.reload('LAY-app-content-list', {
-                where: field,
-                url:"${pageContext.request.contextPath}/root/searchAuthority",
-                method:"post",
-                page: {
-                    curr: 1
-                },
-            });
-        });
-
-
         //第一个实例
         table.render({
-            elem: '#LAY-app-content-list'
-            ,data : ${data}
+            elem: '#LAY-index-wait'
+            ,data : ${waitList}
             ,page: true //开启分页
             ,cols: [[ //表头
                 {field: 'id', title: 'ID', sort: true, fixed: 'left'}
-                ,{field: 'name', title: '名称'}
-                ,{field: 'found', title: '资金规模', sort: true}
-                ,{field: 'people', title: '机构人数'}
-                ,{field: 'tel', title: '联系方式'}
-                ,{field: 'address', title: '地址'}
-                // ,{field: '', title: '评分', templet : function (d) {
-                //     // <button class="layui-btn layui-btn-xs">已发布</button>
-                //     // <button class="layui-btn layui-btn-primary layui-btn-xs">待修改</button>
-                //         if (d.status == true)
-                //             return "正常"
-                //         else
-                //             return "异常"
-                //     }}
+                ,{field: 'title', title: '名称'}
+                ,{field: 'authority_name', title: '慈善机构'}
+                ,{field: 'donee_name', title: '受赠人'}
+                ,{field: 'target', title: '目标', sort: true}
+                ,{field: 'time', title: '起止时间',templet:function (d) {
+                        return d.start +' ~ '+ d.end
+                    }}
+                ,{field: 'receive', title: '已募集'}
+                ,{field: 'status', title: '状态', templet : function (d) {
+                    // <button class="layui-btn layui-btn-xs">已发布</button>
+                    // <button class="layui-btn layui-btn-primary layui-btn-xs">待修改</button>
+                        switch (d.status) {
+                            case 0: return "待审核";
+                            case 1: return "未开始";
+                            case 2: return "进行中";
+                            case 3: return "待处理";
+                            case 4: return "已完成";
+                            case 5: return "未通过";
+                        }
+                    }}
+                ,{field: 'caozuo',title: '操作',templet :function (d) {
+                        return '<div class="layui-table-cell laytable-cell-1-0-7"><a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="detail"><i class="layui-icon layui-icon-search"></i>查看</a><a class="layui-btn layui-btn-danger layui-btn-xs" href="${pageContext.request.contextPath}/root/deleteAuthority?id='+ d.id +'"><i class="layui-icon layui-icon-delete"></i>删除</a> </div>'
+                    }}
+            ]]
+        })
+        //第二个
+        table.render({
+            elem: '#LAY-index-finish'
+            ,data : ${finishList}
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'id', title: 'ID', sort: true, fixed: 'left'}
+                ,{field: 'title', title: '名称'}
+                ,{field: 'authority_name', title: '慈善机构'}
+                ,{field: 'donee_name', title: '受赠人'}
+                ,{field: 'target', title: '目标', sort: true}
+                ,{field: 'time', title: '起止时间',templet:function (d) {
+                        return d.start +' ~ '+ d.end
+                    }}
+                ,{field: 'receive', title: '已募集'}
+                ,{field: 'status', title: '状态', templet : function (d) {
+                        // <button class="layui-btn layui-btn-xs">已发布</button>
+                        // <button class="layui-btn layui-btn-primary layui-btn-xs">待修改</button>
+                        switch (d.status) {
+                            case 0: return "待审核";
+                            case 1: return "未开始";
+                            case 2: return "进行中";
+                            case 3: return "待处理";
+                            case 4: return "已完成";
+                            case 5: return "未通过";
+                        }
+                    }}
                 ,{field: 'caozuo',title: '操作',templet :function (d) {
                         return '<div class="layui-table-cell laytable-cell-1-0-7"><a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="detail"><i class="layui-icon layui-icon-search"></i>查看</a><a class="layui-btn layui-btn-danger layui-btn-xs" href="${pageContext.request.contextPath}/root/deleteAuthority?id='+ d.id +'"><i class="layui-icon layui-icon-delete"></i>删除</a> </div>'
                     }}

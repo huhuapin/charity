@@ -18,7 +18,7 @@
         select
           id, user_id, description, authority_id, sex, birthday, address, tel
         from charity.donee
-        where id = #{id}
+        where user_id = #{id}
     </select>
 
     <!--查询指定行数据-->

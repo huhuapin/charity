@@ -55,7 +55,7 @@ public class seedData {
         ApplicationDao applicationDao = (ApplicationDao) ac.getBean("applicationDao");
         for (int i = 0; i < 5; i++) {
             Application application = new Application();
-            application.setAutorityId(1);
+            application.setAuthorityId(1);
             application.setCategoryId(1);
             application.setDescription("请帮帮我");
             application.setDoneeId(1);

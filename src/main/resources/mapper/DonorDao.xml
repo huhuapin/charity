@@ -10,7 +10,7 @@
         <result property="sex" column="sex" jdbcType="INTEGER"/>
         <result property="birthday" column="birthday" jdbcType="OTHER"/>
         <result property="address" column="address" jdbcType="VARCHAR"/>
-        <result property="tel" column="tel" jdbcType="INTEGER"/>
+        <result property="tel" column="tel" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
@@ -18,7 +18,7 @@
         select
           id, user_id, career, email, sex, birthday, address, tel
         from charity.donor
-        where id = #{id}
+        where user_id = #{id}
     </select>
 
     <!--查询指定行数据-->

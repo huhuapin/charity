@@ -8,7 +8,7 @@
         <result property="found" column="found" jdbcType="INTEGER"/>
         <result property="people" column="people" jdbcType="INTEGER"/>
         <result property="description" column="description" jdbcType="OTHER"/>
-        <result property="tel" column="tel" jdbcType="INTEGER"/>
+        <result property="tel" column="tel" jdbcType="VARCHAR"/>
         <result property="address" column="address" jdbcType="VARCHAR"/>
         <result property="represent" column="represent" jdbcType="VARCHAR"/>
         <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
@@ -21,7 +21,7 @@
         select
           id, user_id, found, people, description, tel, address, represent, created_time, status
         from charity.authority
-        where id = #{id}
+        where user_id = #{id}
     </select>
 
     <!--查询指定行数据-->
@@ -35,7 +35,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll"  resultType="java.util.Map">
         select
-          user.id, name, last_login,user_id, found, people, description, tel, address, represent, created_time, status
+          authority.id, name, last_login,user_id, found, people, description, tel, address, represent, created_time, status
         from charity.authority,charity.user
         <where>
             authority.user_id = user.id

@@ -110,7 +110,7 @@
                         })
                         //发送更新请求
                         //     console.log(t),
-                        layer.close(e))
+                        layer.close(e)
                     },
                     success: function (t, e) {
                         var n = t.find("iframe").contents().find("#layuiadmin-app-form-tags").click();

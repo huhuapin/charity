@@ -2,6 +2,7 @@ package com.charity.service;
 
 import com.charity.entity.Application;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Application)表服务接口
@@ -28,6 +29,8 @@ public interface ApplicationService {
      */
     List<Application> queryAllByLimit(int offset, int limit);
 
+    List<Map<String, Object>> queryAll(Application application);
+
     /**
      * 新增数据
      *
@@ -51,5 +54,7 @@ public interface ApplicationService {
      * @return 是否成功
      */
     boolean deleteById(Integer id);
+
+    int count(Application application);
 
 }

@@ -7,10 +7,10 @@ import java.io.Serializable;
  * (Donee)实体类
  *
  * @author hhp
- * @since 2020-05-10 21:31:55
+ * @since 2020-06-04 16:29:10
  */
 public class Donee implements Serializable {
-    private static final long serialVersionUID = -87458696519191488L;
+    private static final long serialVersionUID = 708043451171711805L;
     
     private Integer id;
     
@@ -19,6 +19,8 @@ public class Donee implements Serializable {
     private String description;
     
     private Integer authorityId;
+    
+    private String email;
     
     private Integer sex;
     
@@ -59,6 +61,14 @@ public class Donee implements Serializable {
 
     public void setAuthorityId(Integer authorityId) {
         this.authorityId = authorityId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Integer getSex() {

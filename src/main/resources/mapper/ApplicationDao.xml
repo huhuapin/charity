@@ -4,7 +4,7 @@
 
     <resultMap type="com.charity.entity.Application" id="ApplicationMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="autorityId" column="autority_id" jdbcType="INTEGER"/>
+        <result property="authorityId" column="authority_id" jdbcType="INTEGER"/>
         <result property="doneeId" column="donee_id" jdbcType="INTEGER"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="description" column="description" jdbcType="OTHER"/>
@@ -22,7 +22,7 @@
     <!--查询单个-->
     <select id="queryById" resultMap="ApplicationMap">
         select
-          id, autority_id, donee_id, title, description, category_id, img, target, donoor_num, start, end, status, urgent, receive
+          id, authority_id, donee_id, title, description, category_id, img, target, donoor_num, start, end, status, urgent, receive
         from charity.application
         where id = #{id}
     </select>
@@ -30,22 +30,28 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ApplicationMap">
         select
-          id, autority_id, donee_id, title, description, category_id, img, target, donoor_num, start, end, status, urgent, receive
+          id, authority_id, donee_id, title, description, category_id, img, target, donoor_num, start, end, status, urgent, receive
         from charity.application
         limit #{offset}, #{limit}
     </select>
 
+    <select id="query" resultMap="ApplicationMap">
+        select * from application
+    </select>
+
+
     <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="ApplicationMap">
+    <select id="queryAll" resultType="java.util.Map">
         select
-          id, autority_id, donee_id, title, description, category_id, img, target, donoor_num, start, end, status, urgent, receive
-        from charity.application
+          application.id, application.authority_id,authority.user_id as authority_user_id,donee_id,donee.user_id as donee_user_id,title, application.description, category_id, img, target, donoor_num, start, end, application.status, urgent, receive
+        from charity.application,authority,donee
         <where>
+            application.authority_id = authority.id and(application.donee_id = donee.id or donee_id is null)
             <if test="id != null">
                 and id = #{id}
             </if>
-            <if test="autorityId != null">
-                and autority_id = #{autorityId}
+            <if test="authorityId != null">
+                and authority_id = #{authorityId}
             </if>
             <if test="doneeId != null">
                 and donee_id = #{doneeId}
@@ -88,16 +94,16 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into charity.application(autority_id, donee_id, title, description, category_id, img, target, donoor_num, start, end, status, urgent, receive)
-        values (#{autorityId}, #{doneeId}, #{title}, #{description}, #{categoryId}, #{img}, #{target}, #{donoorNum}, #{start}, #{end}, #{status}, #{urgent}, #{receive})
+        insert into charity.application(authority_id, donee_id, title, description, category_id, img, target, donoor_num, start, end, status, urgent, receive)
+        values (#{authorityId}, #{doneeId}, #{title}, #{description}, #{categoryId}, #{img}, #{target}, #{donoorNum}, #{start}, #{end}, #{status}, #{urgent}, #{receive})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
         update charity.application
         <set>
-            <if test="autorityId != null">
-                autority_id = #{autorityId},
+            <if test="authorityId != null">
+                authority_id = #{authorityId},
             </if>
             <if test="doneeId != null">
                 donee_id = #{doneeId},
@@ -146,8 +152,52 @@
 
 
     <!--查询申请数-->
-    <select id="aaa" resultType="java.lang.Integer">
-        select count(*) from authority
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from application
+        <where>
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="authorityId != null">
+            and authority_id = #{authorityId}
+        </if>
+        <if test="doneeId != null">
+            and donee_id = #{doneeId}
+        </if>
+        <if test="title != null and title != ''">
+            and title = #{title}
+        </if>
+        <if test="description != null">
+            and description = #{description}
+        </if>
+        <if test="categoryId != null">
+            and category_id = #{categoryId}
+        </if>
+        <if test="img != null and img != ''">
+            and img = #{img}
+        </if>
+        <if test="target != null">
+            and target = #{target}
+        </if>
+        <if test="donoorNum != null">
+            and donoor_num = #{donoorNum}
+        </if>
+        <if test="start != null">
+            and start = #{start}
+        </if>
+        <if test="end != null">
+            and end = #{end}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        <if test="urgent != null">
+            and urgent = #{urgent}
+        </if>
+        <if test="receive != null">
+            and receive = #{receive}
+        </if>
+    </where>
     </select>
 
 </mapper>

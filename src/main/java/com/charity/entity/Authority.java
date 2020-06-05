@@ -9,10 +9,10 @@ import java.io.Serializable;
  * (Authority)实体类
  *
  * @author hhp
- * @since 2020-05-29 19:20:47
+ * @since 2020-06-04 16:27:52
  */
 public class Authority implements Serializable {
-    private static final long serialVersionUID = 153939957193091633L;
+    private static final long serialVersionUID = -98550388803953061L;
     
     private Integer id;
     
@@ -24,7 +24,7 @@ public class Authority implements Serializable {
     
     private Object description;
     
-    private Integer tel;
+    private String tel;
     
     private String address;
     
@@ -34,8 +34,6 @@ public class Authority implements Serializable {
     private Date createdTime;
     
     private Integer status;
-
-    private User user;
 
 
     public Integer getId() {
@@ -78,11 +76,11 @@ public class Authority implements Serializable {
         this.description = description;
     }
 
-    public Integer getTel() {
+    public String getTel() {
         return tel;
     }
 
-    public void setTel(Integer tel) {
+    public void setTel(String tel) {
         this.tel = tel;
     }
 
@@ -118,28 +116,4 @@ public class Authority implements Serializable {
         this.status = status;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("Authority{");
-        sb.append("id=").append(id);
-        sb.append(", userId=").append(userId);
-        sb.append(", found=").append(found);
-        sb.append(", people=").append(people);
-        sb.append(", description=").append(description);
-        sb.append(", tel=").append(tel);
-        sb.append(", address='").append(address).append('\'');
-        sb.append(", represent='").append(represent).append('\'');
-        sb.append(", createdTime=").append(createdTime);
-        sb.append(", status=").append(status);
-        sb.append('}');
-        return sb.toString();
-    }
 }

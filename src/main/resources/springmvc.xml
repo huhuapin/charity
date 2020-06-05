@@ -22,11 +22,10 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     <!--过滤静态资源-->
-    <mvc:resources location="/WEB-INF/resource/img" mapping="/img/**"/>
+    <mvc:resources location="/WEB-INF/resource/img/" mapping="/img/**"/>
     <mvc:resources location="/WEB-INF/resource/js/" mapping="/js/**"/>
     <mvc:resources location="/WEB-INF/resource/css/" mapping="/css/**"/>
     <mvc:resources location="/WEB-INF/resource/layuiadmin/" mapping="/layuiadmin/**"/>
-    <mvc:resources location="/WEB-INF/views/" mapping="/views/**"/>
 
 
     <!--开启SpringMVC注解的支持-->

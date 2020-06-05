@@ -42,6 +42,11 @@ public class DoneeServiceImpl implements DoneeService {
         return this.doneeDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<Donee> queryAll(Donee donee) {
+        return this.doneeDao.queryAll(donee);
+    }
+
     /**
      * 新增数据
      *

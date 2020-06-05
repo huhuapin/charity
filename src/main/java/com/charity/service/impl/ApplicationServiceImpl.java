@@ -1,12 +1,15 @@
 package com.charity.service.impl;
 
+import com.charity.dao.UserDao;
 import com.charity.entity.Application;
 import com.charity.dao.ApplicationDao;
+import com.charity.entity.User;
 import com.charity.service.ApplicationService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Application)表服务实现类
@@ -18,6 +21,9 @@ import java.util.List;
 public class ApplicationServiceImpl implements ApplicationService {
     @Resource
     private ApplicationDao applicationDao;
+
+    @Resource
+    private UserDao userDao;
 
     /**
      * 通过ID查询单条数据
@@ -40,6 +46,25 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public List<Application> queryAllByLimit(int offset, int limit) {
         return this.applicationDao.queryAllByLimit(offset, limit);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryAll(Application application) {
+        List<Map<String,Object>> applications = this.applicationDao.queryAll(application);
+        for (Map<String,Object> app: applications) {
+            int authorityUserId = (Integer) app.get("authority_user_id");
+            User authorityUser = userDao.queryById(authorityUserId);
+            app.put("authority_name",authorityUser.getName());
+            if (app.get("donee_id") != null) {
+                int doneeUserId = (Integer)app.get("donee_id");
+                User doneeUser = userDao.queryById(doneeUserId);
+                app.put("donee_name",doneeUser.getName());
+            }else {
+                app.put("donee_name","群体");
+            }
+        }
+        System.out.println(applications.toString());
+        return applications;
     }
 
     /**
@@ -75,5 +100,10 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public boolean deleteById(Integer id) {
         return this.applicationDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public int count(Application application) {
+        return this.applicationDao.count(application);
     }
 }

@@ -1,8 +1,5 @@
 package com.charity.controller;
-import com.charity.entity.Authority;
-import com.charity.entity.AuthorityUser;
-import com.charity.entity.Donate;
-import com.charity.entity.User;
+import com.charity.entity.*;
 import com.charity.service.*;
 import com.charity.util.JacksonUtil;
 import org.springframework.beans.BeanUtils;
@@ -26,6 +23,8 @@ public class RootController {
     DonateService donateService;
     @Resource
     DoneeService doneeService;
+    @Resource
+    ApplicationService applicationService;
 
     @GetMapping("index")
     public String index(Model model) {
@@ -126,6 +125,13 @@ public class RootController {
 
     @GetMapping("priority")
     public String priority(Model model) {
+        Application application = new Application();
+        application.setUrgent(1);
+        List<Map<String,Object>> waitList = applicationService.queryAll(application);
+        application.setUrgent(2);
+        List<Map<String, Object>> finishList = applicationService.queryAll(application);
+        model.addAttribute("waitList",JacksonUtil.toJson(waitList));
+        model.addAttribute("finishList",JacksonUtil.toJson(finishList));
         return "admin/root/priority";
     }
 }

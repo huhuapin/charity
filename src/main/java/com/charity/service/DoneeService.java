@@ -28,6 +28,8 @@ public interface DoneeService {
      */
     List<Donee> queryAllByLimit(int offset, int limit);
 
+    List<Donee> queryAll(Donee donee);
+
     /**
      * 新增数据
      *

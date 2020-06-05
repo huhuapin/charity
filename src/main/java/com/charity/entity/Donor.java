@@ -7,10 +7,10 @@ import java.util.Date;
  * (Donor)实体类
  *
  * @author hhp
- * @since 2020-05-11 18:33:45
+ * @since 2020-06-04 16:29:31
  */
 public class Donor implements Serializable {
-    private static final long serialVersionUID = -22885020027554709L;
+    private static final long serialVersionUID = -93171926881180465L;
     
     private Integer id;
     
@@ -26,7 +26,7 @@ public class Donor implements Serializable {
     
     private String address;
     
-    private Integer tel;
+    private String tel;
 
 
     public Integer getId() {
@@ -85,12 +85,26 @@ public class Donor implements Serializable {
         this.address = address;
     }
 
-    public Integer getTel() {
+    public String getTel() {
         return tel;
     }
 
-    public void setTel(Integer tel) {
+    public void setTel(String tel) {
         this.tel = tel;
     }
 
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Donor{");
+        sb.append("id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", career='").append(career).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", sex=").append(sex);
+        sb.append(", birthday=").append(birthday);
+        sb.append(", address='").append(address).append('\'');
+        sb.append(", tel='").append(tel).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

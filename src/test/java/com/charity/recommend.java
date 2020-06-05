@@ -24,7 +24,7 @@ public class recommend {
         List<Donate> donates; //某一用户的捐赠历史
 
         List<Donor> donors = donorDao.queryAll(new Donor());   //查询所有的捐赠者
-        List<Application> applications = applicationDao.queryAll(new Application());  //查询所有的捐赠请求
+        List<Application> applications = applicationDao.query();  //查询所有的捐赠请求
 
         int arrMax = applications.size()+2;
         //申请矩阵 行列均为捐赠申请 comMatrix[i][j]表示同时捐赠了申请i和申请j的用户数
