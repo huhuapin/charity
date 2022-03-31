@@ -15,6 +15,9 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+    <!-- 3. 静态页面，如html,css,js,images可以访问 -->
+    <mvc:default-servlet-handler />
+
     <!--配置的视图解析器对象-->
     <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
@@ -26,8 +29,59 @@
     <mvc:resources location="/WEB-INF/resource/js/" mapping="/js/**"/>
     <mvc:resources location="/WEB-INF/resource/css/" mapping="/css/**"/>
     <mvc:resources location="/WEB-INF/resource/layuiadmin/" mapping="/layuiadmin/**"/>
-
+    <mvc:resources location="/WEB-INF/resource/uploads/" mapping="/uploads/**"/>
 
     <!--开启SpringMVC注解的支持-->
     <mvc:annotation-driven/>
+
+<!--    配置controller层的拦截器-->
+    <!-- 配置拦截器 -->
+    <mvc:interceptors>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/root/**"/>
+            <mvc:exclude-mapping path="/category/**"/>
+            <mvc:exclude-mapping path="/authority/**"/>
+            <mvc:exclude-mapping path="/donor/**"/>
+            <mvc:exclude-mapping path="/donee/**"/>
+            <mvc:exclude-mapping path="/user/**"/>
+            <bean class="com.charity.interceptor.HomeInterceptor"></bean>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/root/**"/>
+            <mvc:mapping path="/category/**"/>
+            <!-- mvc:exclude-mapping是另外一种拦截，它可以在你后来的测试中对某个页面进行不拦截，这样就不用在
+                LoginInterceptor的preHandler方法里面获取不拦截的请求uri地址了(优选) -->
+            <bean class="com.charity.interceptor.RootInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/authority/**"/>
+            <!-- mvc:exclude-mapping是另外一种拦截，它可以在你后来的测试中对某个页面进行不拦截，这样就不用在
+                LoginInterceptor的preHandler方法里面获取不拦截的请求uri地址了(优选) -->
+            <bean class="com.charity.interceptor.AuthorityInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- 拦截所有ywjb目录下面的页面 -->
+            <mvc:mapping path="/donor/**"/>
+            <!-- mvc:exclude-mapping是另外一种拦截，它可以在你后来的测试中对某个页面进行不拦截，这样就不用在
+                LoginInterceptor的preHandler方法里面获取不拦截的请求uri地址了(优选) -->
+            <bean class="com.charity.interceptor.DonorInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- 拦截所有ywjb目录下面的页面 -->
+            <mvc:mapping path="/donee/**"/>
+            <!-- mvc:exclude-mapping是另外一种拦截，它可以在你后来的测试中对某个页面进行不拦截，这样就不用在
+                LoginInterceptor的preHandler方法里面获取不拦截的请求uri地址了(优选) -->
+            <bean class="com.charity.interceptor.DoneeInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>

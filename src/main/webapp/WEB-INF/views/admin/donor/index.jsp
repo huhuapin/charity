@@ -22,10 +22,10 @@
                         <div class="layui-card">
                             <div class="layui-card-header">
                                 上次登录
-                                <span class="layui-badge layui-bg-cyan layuiadmin-badge">总</span>
+                                <span class="layui-badge layui-bg-cyan layuiadmin-badge">时间</span>
                             </div>
                             <div class="layui-card-body layuiadmin-card-list">
-                                <p class="layuiadmin-big-font">9,999,666</p>
+                                <p class="layuiadmin-big-font">${user.getStringTime(user.lastLogin)}</p>
                                 <p>
                                     上次访问时间
                                 </p>
@@ -39,7 +39,7 @@
                                 <span class="layui-badge layui-bg-cyan layuiadmin-badge">总</span>
                             </div>
                             <div class="layui-card-body layuiadmin-card-list">
-                                <p class="layuiadmin-big-font">33,555</p>
+                                <p class="layuiadmin-big-font">${times}</p>
                                 <p>
                                     捐赠次数
                                 </p>
@@ -50,11 +50,11 @@
                         <div class="layui-card">
                             <div class="layui-card-header">
                                 捐赠总额
-                                <span class="layui-badge layui-bg-orange layuiadmin-badge">位</span>
+                                <span class="layui-badge layui-bg-orange layuiadmin-badge">总</span>
                             </div>
                             <div class="layui-card-body layuiadmin-card-list">
 
-                                <p class="layuiadmin-big-font">66,666</p>
+                                <p class="layuiadmin-big-font">${money}</p>
                                 <p>
                                     捐赠总额
                                 </p>
@@ -92,8 +92,33 @@
     </script>
     <script src="${pageContext.request.contextPath}/js/echarts.js"></script>
     <script>
+        function getStandDate(relative) {
+            var datetime = new Date(new Date().getTime()-24*60*60*1000*relative);
+            var year = datetime.getFullYear()
+            var month = datetime.getMonth() + 1;
+            month = month < 10 ? '0'+month : month;
+            var day = datetime.getDate() < 10 ? '0'+datetime.getDate() : datetime.getDate();
+            var now = year + '-' + month + '-' +day;
+            return now
+        }
         var myChart = echarts.init(document.getElementById('LAY-index-dataview'));
-
+        var s = ${moneyDay};
+        var arrDay = [];
+        var arrMoney = [];
+        for (let i = 0; i < 7; i++) {
+            var aday = getStandDate(i)
+            arrDay.unshift(aday)
+            var flag = 0
+            s.forEach(function (d) {
+                if (d.date == aday) {
+                    flag = 1;
+                    arrMoney.unshift(d.money)
+                }
+            })
+            if (flag == 0) {
+                arrMoney.unshift(0)
+            }
+        }
         var option = {
             title: {
                 text: '近七日捐赠金额'
@@ -105,7 +130,7 @@
             xAxis: {
                 type: "category",
                 boundaryGap: !1,
-                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                data: arrDay
             },
             yAxis: {type:"value"},
 
@@ -114,7 +139,7 @@
                 type: 'line',
                 smooth: !0,
                 itemStyle: {normal: {areaStyle: {type: "default"}}},
-                data: [5, 20, 36, 10, 10, 20]
+                data: arrMoney
             }]
 
         };
@@ -122,5 +147,6 @@
         myChart.setOption(option);
         window.onresize = myChart.resize;
     </script>
+
 </body>
 </html>

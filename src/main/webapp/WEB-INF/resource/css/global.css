@@ -578,3 +578,7 @@ body .fly-user-main{position: relative; width: 100%; min-height: 600px;}
   max-width: 100%!important;
   height: auto!important;
 }
+
+.jianjie {
+  min-height: 65px;
+}

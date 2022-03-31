@@ -28,6 +28,7 @@ public interface NewsService {
      */
     List<News> queryAllByLimit(int offset, int limit);
 
+    List<News> queryAll(News news);
     /**
      * 新增数据
      *
@@ -51,5 +52,7 @@ public interface NewsService {
      * @return 是否成功
      */
     boolean deleteById(Integer id);
+
+    List<News> search(String title,News news);
 
 }

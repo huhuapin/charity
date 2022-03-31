@@ -57,9 +57,11 @@ public class CategoryController {
         try {
             categoryService.insert(category1);
             map.put("code",0);
+            map.put("msg","添加成功");
             map.put("data",null);
         }catch (Exception e) {
             map.put("code",-1);
+            map.put("msg","添加失败");
             map.put("data",null);
         }
         return map;
@@ -70,14 +72,33 @@ public class CategoryController {
     public Map<String,Object> edit(Category category) {
         Map<String,Object> map = new HashMap<String, Object>();
         try {
+            System.out.println(category.getCategory());
             categoryService.update(category);
             map.put("code",0);
+            map.put("msg","修改成功");
             map.put("data",null);
         }catch (Exception e) {
             map.put("code",-1);
+            map.put("msg","修改失败");
             map.put("data",null);
         }
         return map;
     }
 
+    @GetMapping("delete")
+    @ResponseBody
+    public Map<String,Object> delete(int id) {
+        Map<String,Object> map = new HashMap<String, Object>();
+        try {
+            categoryService.deleteById(id);
+            map.put("code",0);
+            map.put("msg","删除成功");
+            map.put("data",null);
+        }catch (Exception e) {
+            map.put("code",-1);
+            map.put("msg","删除失败");
+            map.put("data",null);
+        }
+        return map;
+    }
 }

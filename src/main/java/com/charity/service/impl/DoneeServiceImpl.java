@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Donee)表服务实现类
@@ -30,6 +31,11 @@ public class DoneeServiceImpl implements DoneeService {
         return this.doneeDao.queryById(id);
     }
 
+    @Override
+    public Donee queryByUserId(Integer id) {
+        return this.doneeDao.queryByUserId(id);
+    }
+
     /**
      * 查询多条数据
      *
@@ -45,6 +51,11 @@ public class DoneeServiceImpl implements DoneeService {
     @Override
     public List<Donee> queryAll(Donee donee) {
         return this.doneeDao.queryAll(donee);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryAllInfo(Donee donee) {
+        return this.doneeDao.queryAllInfo(donee);
     }
 
     /**

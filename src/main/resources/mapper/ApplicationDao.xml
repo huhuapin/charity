@@ -43,33 +43,33 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultType="java.util.Map">
         select
-          application.id, application.authority_id,authority.user_id as authority_user_id,donee_id,donee.user_id as donee_user_id,title, application.description, category_id, img, target, donoor_num, start, end, application.status, urgent, receive
+          application.id, application.authority_id,authority.user_id as authority_user_id,donee_id,donee.user_id as donee_user_id,title, application.description, category_id, application.img, target, donoor_num, start, end, application.status, urgent, receive
         from charity.application,authority,donee
         <where>
             application.authority_id = authority.id and(application.donee_id = donee.id or donee_id is null)
             <if test="id != null">
-                and id = #{id}
+                and application.id = #{id}
             </if>
             <if test="authorityId != null">
-                and authority_id = #{authorityId}
+                and application.authority_id = #{authorityId}
             </if>
             <if test="doneeId != null">
-                and donee_id = #{doneeId}
+                and application.donee_id = #{doneeId}
             </if>
             <if test="title != null and title != ''">
                 and title = #{title}
             </if>
             <if test="description != null">
-                and description = #{description}
+                and application.description = #{description}
             </if>
             <if test="categoryId != null">
-                and category_id = #{categoryId}
+                and application.category_id = #{categoryId}
             </if>
             <if test="img != null and img != ''">
-                and img = #{img}
+                and application.img = #{img}
             </if>
             <if test="target != null">
-                and target = #{target}
+                and application.target = #{target}
             </if>
             <if test="donoorNum != null">
                 and donoor_num = #{donoorNum}
@@ -81,7 +81,7 @@
                 and end = #{end}
             </if>
             <if test="status != null">
-                and status = #{status}
+                and application.status = #{status}
             </if>
             <if test="urgent != null">
                 and urgent = #{urgent}
@@ -90,6 +90,7 @@
                 and receive = #{receive}
             </if>
         </where>
+        order by application.id desc
     </select>
 
     <!--新增所有列-->
@@ -198,6 +199,98 @@
             and receive = #{receive}
         </if>
     </where>
+    </select>
+
+<!--    修改紧急情况-->
+    <update id="setPriority">
+        update application set urgent = #{urgent} where id = #{id}
+    </update>
+
+    <select id="search" resultType="java.util.Map">
+        select
+        application.id, application.authority_id,authority.user_id as authority_user_id,donee_id,donee.user_id as donee_user_id,title, application.description, category_id, application.img, target, donoor_num, start, end, application.status, urgent, receive
+        from charity.application,authority,donee
+        <where>
+            application.authority_id = authority.id and(application.donee_id = donee.id or donee_id is null)
+            <if test="authorityId != null">
+               and application.authority_id = #{authorityId}
+            </if>
+            <if test="status != null">
+                and application.status = #{status}
+            </if>
+            and application.title like concat('%',#{title},'%')
+        </where>
+        order by application.id desc
+    </select>
+
+    <select id="queryRunUrgent" resultType="java.util.Map">
+        select
+        application.id, application.authority_id,authority.user_id as authority_user_id,donee_id,donee.user_id as donee_user_id,title, application.description, category_id, application.img, target, donoor_num, start, end, application.status, urgent, receive
+        from charity.application,authority,donee
+        <where>
+            application.authority_id = authority.id and(application.donee_id = donee.id or donee_id is null)
+            <if test="application.categoryId != null">
+              and   category_id = #{application.categoryId}
+            </if>
+            <if test="status.length > 0">
+            and application.status in
+                <foreach collection="status" item="statu" index="index" open="(" close=")" separator=",">
+                    #{statu}
+                </foreach>
+            </if>
+            <if test="urgents.length > 0">
+                and urgent in
+                <foreach collection="urgents" item="urgent" index="index" open="(" close=")" separator=",">
+                    #{urgent}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+<!--    查询通过审核的项目-->
+    <select id="queryRun" resultType="java.util.Map">
+        select
+        application.id, application.authority_id,authority.user_id as authority_user_id,donee_id,donee.user_id as donee_user_id,title, application.description, category_id, application.img, target, donoor_num, start, end, application.status, urgent, receive
+        from charity.application,authority,donee
+        <where>
+            application.authority_id = authority.id and(application.donee_id = donee.id or donee_id is null) and application.status in(1,2,3)
+            <if test="application.categoryId != null">
+                and   category_id = #{application.categoryId}
+            </if>
+        </where>
+        <if test="limit !=null and limit !=0">
+            limit 0,#{limit}
+        </if>
+    </select>
+
+    <select id="queryApplicationList" resultType="java.util.Map">
+        select
+        application.id, application.authority_id,authority.user_id as authority_user_id,category,donee_id,donee.user_id as donee_user_id,title, application.description, category_id, application.img, target, donoor_num, start, end, application.status, urgent, receive
+        from charity.application,authority,donee,category
+        <where>
+            application.authority_id = authority.id and(application.donee_id = donee.id or donee_id is null) and category_id = category.id and application.status in(1,2,3)
+            <if test="application.categoryId != null">
+                and   category_id = #{application.categoryId}
+            </if>
+            <if test="urgents.length > 0">
+                and urgent in
+                <foreach collection="urgents" item="urgent" index="index" open="(" close=")" separator=",">
+                    #{urgent}
+                </foreach>
+            </if>
+            <if test="keywords != null and keywords != ''">
+                and   application.title like concat('%',#{keywords},'%')
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="queryMaxId" resultType="Integer">
+        select max(id) from  application
+    </select>
+
+    <select id="queryMapById" resultType="java.util.Map">
+        select
     </select>
 
 </mapper>

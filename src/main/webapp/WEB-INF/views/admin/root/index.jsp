@@ -18,20 +18,20 @@
         <div class="layadmin-tabsbody-item layui-show">
             <div class="layui-fluid">
                 <div class="layui-row layui-col-space15">
-<%--                    <div class="layui-col-sm6 layui-col-md3">--%>
-<%--                        <div class="layui-card">--%>
-<%--                            <div class="layui-card-header">--%>
-<%--                                访问量--%>
-<%--                                <span class="layui-badge layui-bg-cyan layuiadmin-badge">总</span>--%>
-<%--                            </div>--%>
-<%--                            <div class="layui-card-body layuiadmin-card-list">--%>
-<%--                                <p class="layuiadmin-big-font">9,999,666</p>--%>
-<%--                                <p>--%>
-<%--                                    总计访问量--%>
-<%--                                </p>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
+                    <div class="layui-col-sm6 layui-col-md3">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                上次登录
+                                <span class="layui-badge layui-bg-cyan layuiadmin-badge">时间</span>
+                            </div>
+                            <div class="layui-card-body layuiadmin-card-list">
+                                <p class="layuiadmin-big-font">${user.getStringTime(user.lastLogin)}</p>
+                                <p>
+                                    上次访问时间
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                     <div class="layui-col-sm6 layui-col-md3">
                         <div class="layui-card">
                             <div class="layui-card-header">

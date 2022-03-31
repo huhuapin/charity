@@ -20,6 +20,8 @@ public interface AuthorityService {
      */
     Authority queryById(Integer id);
 
+    Authority queryByUserId(Integer id);
+
     /**
      * 查询多条数据
      *

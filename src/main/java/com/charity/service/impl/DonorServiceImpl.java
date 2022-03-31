@@ -30,6 +30,12 @@ public class DonorServiceImpl implements DonorService {
         return this.donorDao.queryById(id);
     }
 
+    @Override
+    public Donor queryByUserId(Integer id){
+        return this.donorDao.queryByUserId(id);
+    }
+
+
     /**
      * 查询多条数据
      *

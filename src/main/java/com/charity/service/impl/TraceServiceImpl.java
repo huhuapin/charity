@@ -42,6 +42,11 @@ public class TraceServiceImpl implements TraceService {
         return this.traceDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<Trace> queryAll(Trace trace) {
+        return this.traceDao.queryAll(trace);
+    }
+
     /**
      * 新增数据
      *

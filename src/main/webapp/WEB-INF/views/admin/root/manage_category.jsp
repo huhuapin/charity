@@ -52,6 +52,7 @@
             elem: "#LAY-app-content-tags",
             //修改数据
             data: ${data},
+            page:true,
             cols: [[ {field: "id", width: 100, title: "ID", sort: !0}, {
                 field: "category",
                 title: "分类名",
@@ -63,8 +64,32 @@
             var i = t.data;
             if ("del" === t.event) layer.confirm("确定删除此分类？", function (e) {
                 console.log(i);
+
                 //删除操作
-                t.del(), layer.close(e)
+                $.ajax({
+                    method:'get',
+                    url:"${pageContext.request.contextPath}/category/delete",
+                    dataType:"json",
+                    data:{
+                        "id":t.data.id
+                    },
+                    success:function(data){
+                        if(data&&data.code == 0){
+                            t.del()
+                            table.reload()
+                            layer.msg(data.msg,{icon:1})
+                        }
+                        else{
+                            layer.msg("修改失败！",{icon:2})
+                        }
+                    },
+                    error:function(e){
+                        layer.msg("修改失败！",{icon:2})
+                    },
+
+                })
+                layer.close(e)
+
             }); else if ("edit" === t.event) {
                 $(t.tr);
                 console.log(t)
@@ -86,12 +111,14 @@
                         var n = i.find("#layuiadmin-app-form-tags"),
                             l = n.find('input[name="category"]').val();
                         l.replace(/\s/g, "") &&
+                        //发送更新请求
                         $.ajax({
                             method:'post',
                             url:"${pageContext.request.contextPath}/category/edit",
-                            dataType:"jsonp",
+                            dataType:"json",
                             data:{
-                                "category":t.data
+                                "id":t.data.id,
+                                "category":l
                             },
                             success:function(data){
                                 if(data&&data.code == 0){
@@ -108,8 +135,6 @@
                             },
 
                         })
-                        //发送更新请求
-                        //     console.log(t),
                         layer.close(e)
                     },
                     success: function (t, e) {
@@ -143,20 +168,29 @@
                         $.ajax({
                             method:'post',
                             url:"${pageContext.request.contextPath}/category/add",
-                            dataType:"jsonp",
+                            dataType:"json",
                             data:{
                                 "category":tags
                             },
+                            parseData:function(res) {
+
+                                return {
+                                    "code":res.code,
+                                    "data":res.data,
+                                }
+                            },
                             success:function(data){
                                 if(data&&data.code == 0){
-                                    layer.msg("提交成功！",{icon:1})
-                                    setTimeout(window.location.reload())
+                                    layer.msg("提交成功！",{icon:1},function () {
+                                        window.location.reload();
+                                    })
                                 }
                                 else{
                                     layer.msg("提交失败！",{icon:2})
                                 }
                             },
                             error:function(e){
+                                console.log(e);
                                 layer.msg("提交失败！",{icon:2})
                             },
 

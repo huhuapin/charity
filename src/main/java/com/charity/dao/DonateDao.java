@@ -39,7 +39,7 @@ public interface DonateDao {
      * @param donate 实例对象
      * @return 对象列表
      */
-    List<Donate> queryAll(Donate donate);
+    List<Map<String,Object>> queryAll(Donate donate);
 
     /**
      * 新增数据
@@ -76,4 +76,16 @@ public interface DonateDao {
     double queryMoneyAll(@Param("donate") Donate donate, @Param("startDate")Date startDate,@Param("endDate") Date endDate);
 
     List<Map<String,Object>> queryMoneyDay(Donate donate);
+
+    /**
+     * 查询当日捐款人数和钱数
+     */
+    List<Map<String,Object>> todayDonor(@Param("authorityId") Integer authorityId);
+
+    int queryTimesAll(Donate donate);
+
+    List<Map<String, Object>> queryAllByDoneeId(int doneeId);
+
+    List<Map<String,Object>> queryMoneyDayByDoneeId(Integer doneeId);
+
 }

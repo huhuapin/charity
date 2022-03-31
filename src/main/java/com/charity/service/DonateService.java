@@ -31,6 +31,8 @@ public interface DonateService {
      */
     List<Donate> queryAllByLimit(int offset, int limit);
 
+    List<Map<String,Object>> queryAll(Donate donate);
+
     /**
      * 新增数据
      *
@@ -58,4 +60,17 @@ public interface DonateService {
     double queryMoneyAll(Donate donate, Date startDate, Date endDate);
 
     List<Map<String,Object>> queryMoneyDay(Donate donate);
+
+    /**
+     * 查询当天捐款人数
+     */
+    int todayPeople(Integer authorityId);
+
+    /**
+     * 查询捐赠次数
+     */
+    int queryTimesAll(Donate donate);
+
+    List<Map<String,Object>> queryAllByDoneeId(Integer doneeId);
+
 }

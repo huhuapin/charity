@@ -18,7 +18,7 @@
         select
           id, user_id, career, email, sex, birthday, address, tel
         from charity.donor
-        where user_id = #{id}
+        where id = #{id}
     </select>
 
     <!--查询指定行数据-->
@@ -107,4 +107,11 @@
         select count(*) from donor
     </select>
 
+    <!--查询单个-->
+    <select id="queryByUserId" resultMap="DonorMap">
+        select
+          id, user_id, career, email, sex, birthday, address, tel
+        from charity.donor
+        where user_id = #{id}
+    </select>
 </mapper>

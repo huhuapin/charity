@@ -60,6 +60,7 @@
                 and click = #{click}
             </if>
         </where>
+        order by time desc
     </select>
 
     <!--新增所有列-->
@@ -101,5 +102,39 @@
     <delete id="deleteById">
         delete from charity.news where id = #{id}
     </delete>
-
+    <select id="search" resultMap="NewsMap">
+        select
+        id, authority_id, title, description, thumb, content, time, click
+        from charity.news
+        <where>
+            <if test="keywords != null">
+                and title like  concat('%',#{keywords},'%')
+            </if>
+            <if test="news.id != null">
+                and id = #{news.id}
+            </if>
+            <if test="news.authorityId != null">
+                and authority_id = #{news.authorityId}
+            </if>
+            <if test="news.title != null and news.title != ''">
+                and title = #{news.title}
+            </if>
+            <if test="news.description != null and news.description != ''">
+                and description = #{news.description}
+            </if>
+            <if test="news.thumb != null and news.thumb != ''">
+                and thumb = #{news.thumb}
+            </if>
+            <if test="news.content != null">
+                and content = #{news.content}
+            </if>
+            <if test="news.time != null">
+                and time = #{news.time}
+            </if>
+            <if test="news.click != null">
+                and click = #{news.click}
+            </if>
+        </where>
+        order by time desc
+    </select>
 </mapper>

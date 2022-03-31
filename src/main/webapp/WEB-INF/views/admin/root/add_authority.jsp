@@ -61,7 +61,17 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">机构logo</label>
+                                <div class="layui-input-block">
+                                    <button type="button" class="layui-btn" id="test1">上传图片</button>
+                                    <div class="layui-upload-list">
+                                        <input type="hidden" name="img" class="layui-upload-file" value="">
+                                        <img class="layui-upload-img" id="demo1" src="">
+                                        <p id="demoText"></p>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="layui-form-item">
                                 <div class="layui-form-inline">
                                     <label class="layui-form-label">联系方式</label>
@@ -118,7 +128,7 @@
         base: '${pageContext.request.contextPath}/layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index', 'form', 'laydate','layedit'], function(){
+    }).use(['index', 'form', 'laydate','layedit','upload'], function(){
         var $ = layui.$
             ,admin = layui.admin
             ,element = layui.element
@@ -126,12 +136,40 @@
             ,laydate = layui.laydate
             ,form = layui.form;
         var layedit = layui.layedit;
-        layedit.build('description') //建立编辑器
+        layedit.build('description',{
+            uploadImage : {
+                url:"${pageContext.request.contextPath}/upload/img",
+                type: "POST",
+                base_url:"${pageContext.request.contextPath}"
+            }
+        }) //建立编辑器
 
         form.render(null, 'component-form-group');
 
         laydate.render({
             elem: '#LAY-component-form-group-date'
+        });
+
+        //图片上传
+        var upload = layui.upload;
+        var uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            ,url: '${pageContext.request.contextPath}/upload/img' //上传接口
+            ,done: function(data){
+                //上传完毕回调
+                console.log(data);
+                if (data.code == 0) {
+                    $('#demo1').attr("src","${pageContext.request.contextPath}"+data.data.src);
+                    console.log(this.item);
+                    $("input[name='img']").val(data.data.src);
+                    layer.msg(data.message,{icon:1});
+                } else{
+                    layer.msg(data.message,{icon:1});
+                }
+            }
+            ,error: function(){
+                //请求异常回调
+            }
         });
 
         /* 自定义验证规则 */

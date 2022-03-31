@@ -2,6 +2,8 @@ package com.charity.dao;
 
 import com.charity.entity.Application;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -65,4 +67,32 @@ public interface ApplicationDao {
     int deleteById(Integer id);
 
     int count(Application application);
+
+    int setPriority(Application application);
+
+    List<Map<String,Object>> search(@Param("authorityId") Integer authorityId,@Param("title") String title,@Param("status")Integer status);
+
+    /**
+     * 按照分类、状态、紧急程度查询
+     * @param application
+     * @param stauts
+     * @param urgents
+     * @return
+     */
+    List<Map<String,Object>> queryRunUrgent(@Param("application") Application application, @Param("status") int stauts[],@Param("urgents") int urgents[]);
+
+    /**
+     * 按照分类查询 未开始、进行中、已完成的项目
+     * @param application
+     * @param limit
+     * @return
+     */
+    List<Map<String,Object>> queryRun(@Param("application") Application application, @Param("limit")Integer limit);
+
+
+    List<Map<String, Object>> queryApplicationList(@Param("application") Application application, @Param("keywords") String keywords,@Param("urgents") int[] urgents);
+
+    Integer queryMaxId();
+
+    Map<String,Object> queryMapById(Integer id);
 }

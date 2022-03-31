@@ -115,4 +115,20 @@ public class Donate implements Serializable {
         this.authorityId = authorityId;
     }
 
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Donate{");
+        sb.append("id=").append(id);
+        sb.append(", donorId=").append(donorId);
+        sb.append(", applicationId=").append(applicationId);
+        sb.append(", money=").append(money);
+        sb.append(", isAnoymous=").append(isAnoymous);
+        sb.append(", message='").append(message).append('\'');
+        sb.append(", prove='").append(prove).append('\'');
+        sb.append(", date=").append(date);
+        sb.append(", status=").append(status);
+        sb.append(", authorityId=").append(authorityId);
+        sb.append('}');
+        return sb.toString();
+    }
 }

@@ -19,6 +19,8 @@ public class Authority implements Serializable {
     private Integer userId;
     
     private Integer found;
+
+    private String img;
     
     private Integer people;
     
@@ -58,6 +60,14 @@ public class Authority implements Serializable {
 
     public void setFound(Integer found) {
         this.found = found;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public Integer getPeople() {
@@ -116,4 +126,22 @@ public class Authority implements Serializable {
         this.status = status;
     }
 
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Authority{");
+        sb.append("id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", found=").append(found);
+        sb.append(", img='").append(img).append('\'');
+        sb.append(", people=").append(people);
+        sb.append(", description=").append(description);
+        sb.append(", tel='").append(tel).append('\'');
+        sb.append(", address='").append(address).append('\'');
+        sb.append(", represent='").append(represent).append('\'');
+        sb.append(", createdTime=").append(createdTime);
+        sb.append(", status=").append(status);
+        sb.append('}');
+        return sb.toString();
+    }
 }

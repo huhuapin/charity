@@ -6,7 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -43,48 +44,48 @@
         <div class="layui-fluid">
             <div class="layui-row layui-col-space15">
                 <div class="layui-col-md-12">
-                    <div class="layui-card">
-                        <div class="layui-card-header">项目详情</div>
-                        <div class="layui-card-body" style="padding: 15px;">
-                            <div class="layui-form-item layui-row">
-                                <div class="layui-col-md3">
-                                    <div class="article-label">今天周几？</div>
-                                </div>
-                                <div class="layui-col-md9">
-                                    <div class="article-value">今天周一</div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item layui-row">
-                                <div class="layui-col-md3">
-                                    <div class="article-label">今天周几？</div>
-                                </div>
-                                <div class="layui-col-md9">
-                                    <div class="article-value">今天周一</div>
-                                </div>
-                            </div>                            <div class="layui-form-item layui-row">
-                            <div class="layui-col-md3">
-                                <div class="article-label">今天周几？</div>
-                            </div>
-                            <div class="layui-col-md9">
-                                <div class="article-value">今天周一</div>
-                            </div>
-                        </div>                            <div class="layui-form-item layui-row">
-                            <div class="layui-col-md3">
-                                <div class="article-label">今天周几？</div>
-                            </div>
-                            <div class="layui-col-md9">
-                                <div class="article-value">今天周一</div>
-                            </div>
-                        </div>                            <div class="layui-form-item layui-row">
-                            <div class="layui-col-md3">
-                                <div class="article-label">今天周几？</div>
-                            </div>
-                            <div class="layui-col-md9">
-                                <div class="article-value">今天周一</div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
+<%--                    <div class="layui-card">--%>
+<%--                        <div class="layui-card-header">项目详情</div>--%>
+<%--                        <div class="layui-card-body" style="padding: 15px;">--%>
+<%--                            <div class="layui-form-item layui-row">--%>
+<%--                                <div class="layui-col-md3">--%>
+<%--                                    <div class="article-label">今天周几？</div>--%>
+<%--                                </div>--%>
+<%--                                <div class="layui-col-md9">--%>
+<%--                                    <div class="article-value">今天周一</div>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                            <div class="layui-form-item layui-row">--%>
+<%--                                <div class="layui-col-md3">--%>
+<%--                                    <div class="article-label">今天周几？</div>--%>
+<%--                                </div>--%>
+<%--                                <div class="layui-col-md9">--%>
+<%--                                    <div class="article-value">今天周一</div>--%>
+<%--                                </div>--%>
+<%--                            </div>                            <div class="layui-form-item layui-row">--%>
+<%--                            <div class="layui-col-md3">--%>
+<%--                                <div class="article-label">今天周几？</div>--%>
+<%--                            </div>--%>
+<%--                            <div class="layui-col-md9">--%>
+<%--                                <div class="article-value">今天周一</div>--%>
+<%--                            </div>--%>
+<%--                        </div>                            <div class="layui-form-item layui-row">--%>
+<%--                            <div class="layui-col-md3">--%>
+<%--                                <div class="article-label">今天周几？</div>--%>
+<%--                            </div>--%>
+<%--                            <div class="layui-col-md9">--%>
+<%--                                <div class="article-value">今天周一</div>--%>
+<%--                            </div>--%>
+<%--                        </div>                            <div class="layui-form-item layui-row">--%>
+<%--                            <div class="layui-col-md3">--%>
+<%--                                <div class="article-label">今天周几？</div>--%>
+<%--                            </div>--%>
+<%--                            <div class="layui-col-md9">--%>
+<%--                                <div class="article-value">今天周一</div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
 
                 </div>
                 <div class="layui-col-md-12">
@@ -92,40 +93,18 @@
                 <div class="layui-card-header">善款去向</div>
                 <div class="layui-card-body">
                     <div style="padding-bottom: 10px;">
-                        <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
+                        <button class="layui-btn layuiadmin-btn-list" data-type="add" id="add">添加</button>
                     </div>
                     <ul class="layui-timeline">
+                        <c:forEach items="${traces}" var="trace" varStatus="status">
                         <li class="layui-timeline-item">
                             <i class="layui-icon layui-timeline-axis"></i>
                             <div class="layui-timeline-content layui-text">
-                                <h3 class="layui-timeline-title">12月28日<a href="javascript:;"><i class="layui-icon layui-icon-edit" data-id="1"></i></a></h3>
-                                <p>
-                                    一直以来，layui 秉承无偿开源的初心，虔诚致力于服务各层次前后端 Web 开发者，在商业横飞的当今时代，这一信念从未动摇。即便身单力薄，仍然重拾决心，埋头造轮，以尽可能地填补产品本身的缺口。在过去的一段的时间，我一直在寻求持久之道，已维持你眼前所见的一切。而 layuiAdmin 是我们尝试解决的手段之一。我相信真正有爱于 layui 生态的你，定然不会错过这一拥抱吧。
-                                </p>
-                                <p><br>子曰：君子不用防，小人防不住。请务必通过官网正规渠道，获得 <a href="http://www.layui.com/admin/" target="_blank">layuiAdmin</a>！</p>
+                                <h3 class="layui-timeline-title">${trace.timeString}   <span class="trace-title">${trace.title}</span>&nbsp;&nbsp;&nbsp;<a href="javascript:;"><i class="layui-icon layui-icon-edit" data-id="${trace.id}" data-index="${status.index}"></i></a>&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/authority/deleteTrace?id=${trace.id}"><i class="layui-icon layui-icon-delete" data-id="1"></i></a></h3>
+                                <div class="trace-content">${trace.content}</div>
                             </div>
                         </li>
-                        <li class="layui-timeline-item">
-                            <i class="layui-icon layui-timeline-axis"></i>
-                            <div class="layui-timeline-content layui-text">
-                                <h3 class="layui-timeline-title">12月25日</h3>
-                                <p>又是一年 <em>“圣诞节”</em>，2018 向我们正在走来</p>
-                                <ul>
-                                    <li>叮叮当，叮叮当，铃儿响叮当</li>
-                                    <li>今晚滑雪多快乐，我们坐在雪橇上</li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="layui-timeline-item">
-                            <i class="layui-icon layui-timeline-axis"></i>
-                            <div class="layui-timeline-content layui-text">
-                                <h3 class="layui-timeline-title">12月24日</h3>
-                                <p>
-                                    美丽的夜晚，都是祈祷的人们。<br>他们等待着第二天，收到圣诞老人的礼物。<br><br>
-                                </p>
-                                <blockquote class="layui-elem-quote">平安夜，天赐平安。愿真善美的事物都能永恒。</blockquote>
-                            </div>
-                        </li>
+                        </c:forEach>
                         <li class="layui-timeline-item">
                             <i class="layui-icon layui-timeline-axis"></i>
                             <div class="layui-timeline-content layui-text">
@@ -174,13 +153,19 @@
                 ,table = layui.table
                 ,layer = layui.layer
                 , form = layui.form;
+            var layedit = layui.layedit;
 
             $('.layui-icon-edit').on('click', function(d){
-                console.log(d)
-                console.log($(this).data('id'))
+                var traceId = $(this).data('id');
+                var index = $(this).data('index');
                 layer.config({
                     skin: 'layui-layer-molv'
                 })
+                var old_title = $($('.trace-title')[index]).text();
+                var old_content = $($('.trace-content')[index]).html();
+                $('#content').val(old_content);
+                var title = $('input[name="title"]');
+                title.val(old_title);
                 layer.open({
                     type: 1
                     ,title: '编辑去向'
@@ -188,12 +173,92 @@
                     ,area:['960px','540px']
                     ,btn: ['确定', '取消']
                     ,yes: function(index, layero){
-                        console.log(index)
-                        console.log(layero)
+                        var title = $('input[name="title"]');
+                        var content = layedit.getContent(editor);
+                        $.ajax({
+                            method:"post",
+                            url:"${pageContext.request.contextPath}/authority/editTrace",
+                            data:{
+                                id:traceId,
+                                title:title.val(),
+                                content:content,
+                                applicationId:${application.id}
+                            },
+                            success:function (data) {
+                                if (data.code == 0) {
+                                    layer.msg("修改成功",{icon:1},function () {
+                                        window.location.reload();
+                                    });
+                                }else {
+                                    layer.msg("服务器错误",{icon:2});
+                                }
+                            },
+                            error:function (data) {
+                                layer.msg("请求失败",{icon:2});
+
+                            },
+                        })
                     }
                 });
-                var layedit = layui.layedit;
-                layedit.build('content') //建立编辑器
+                editor = layedit.build('content',{
+                    uploadImage : {
+                        url:"${pageContext.request.contextPath}/upload/img",
+                        type: "POST",
+                        base_url:"${pageContext.request.contextPath}"
+                    }
+                }) //建立编辑器
+
+            })
+
+
+            $('#add').on('click', function(d){
+                layer.config({
+                    skin: 'layui-layer-molv'
+                })
+                //模态框清空
+                $('#content').val('');
+                $('input[name="title"]').val('');
+
+                layer.open({
+                    type: 1
+                    ,title: '新增去向'
+                    ,content: $('#layui-container')
+                    ,area:['960px','540px']
+                    ,btn: ['确定', '取消']
+                    ,yes: function(index, layero){
+                        var title = $('input[name="title"]');
+                        var content = layedit.getContent(editor);
+                        $.ajax({
+                            method:"post",
+                            url:"${pageContext.request.contextPath}/authority/addTrace",
+                            data:{
+                                title:title.val(),
+                                content:content,
+                                applymentId:${application.id}
+                            },
+                            success:function (data) {
+                                if (data.code == 0) {
+                                    layer.msg("添加成功",{icon:1},function () {
+                                        window.location.reload();
+                                    });
+                                }else {
+                                    layer.msg("服务器错误",{icon:2});
+                                }
+                            },
+                            error:function (data) {
+                                layer.msg("请求失败",{icon:2});
+
+                            }
+                        })
+                    }
+                });
+                editor = layedit.build('content',{
+                    uploadImage : {
+                        url:"${pageContext.request.contextPath}/upload/img",
+                        type: "POST",
+                        base_url:"${pageContext.request.contextPath}"
+                    }
+                }) //建立编辑器
             })
 
         })

@@ -1,5 +1,6 @@
 package com.charity.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -15,6 +16,8 @@ public class News implements Serializable {
     private Integer id;
     
     private Integer authorityId;
+
+    private String authorityName;
     
     private String title;
     
@@ -28,6 +31,13 @@ public class News implements Serializable {
     
     private Integer click;
 
+    public String getAuthorityName() {
+        return authorityName;
+    }
+
+    public void setAuthorityName(String authorityName) {
+        this.authorityName = authorityName;
+    }
 
     public Integer getId() {
         return id;
@@ -91,6 +101,10 @@ public class News implements Serializable {
 
     public void setClick(Integer click) {
         this.click = click;
+    }
+    public String getStringTime() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return simpleDateFormat.format(this.time);
     }
 
 }

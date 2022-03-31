@@ -2,6 +2,7 @@ package com.charity.service;
 
 import com.charity.entity.Donee;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Donee)表服务接口
@@ -19,6 +20,9 @@ public interface DoneeService {
      */
     Donee queryById(Integer id);
 
+    Donee queryByUserId(Integer id);
+
+
     /**
      * 查询多条数据
      *
@@ -29,6 +33,8 @@ public interface DoneeService {
     List<Donee> queryAllByLimit(int offset, int limit);
 
     List<Donee> queryAll(Donee donee);
+
+    List<Map<String,Object>> queryAllInfo(Donee donee);
 
     /**
      * 新增数据

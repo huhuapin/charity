@@ -28,6 +28,8 @@ public interface TraceService {
      */
     List<Trace> queryAllByLimit(int offset, int limit);
 
+    List<Trace> queryAll(Trace trace);
+
     /**
      * 新增数据
      *

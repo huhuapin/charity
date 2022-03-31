@@ -56,16 +56,16 @@ public class ApplicationServiceImpl implements ApplicationService {
             User authorityUser = userDao.queryById(authorityUserId);
             app.put("authority_name",authorityUser.getName());
             if (app.get("donee_id") != null) {
-                int doneeUserId = (Integer)app.get("donee_id");
+                int doneeUserId = (Integer)app.get("donee_user_id");
                 User doneeUser = userDao.queryById(doneeUserId);
                 app.put("donee_name",doneeUser.getName());
             }else {
                 app.put("donee_name","群体");
             }
         }
-        System.out.println(applications.toString());
         return applications;
     }
+
 
     /**
      * 新增数据
@@ -105,5 +105,99 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public int count(Application application) {
         return this.applicationDao.count(application);
+    }
+
+    @Override
+    public int setPriority(Application application) {
+        return this.applicationDao.setPriority(application);
+    }
+
+    @Override
+    public List<Map<String, Object>> search(Integer authorityId, String title,Integer status) {
+        List<Map<String,Object>> applications = this.applicationDao.search(authorityId,title,status);
+        for (Map<String,Object> app: applications) {
+            int authorityUserId = (Integer) app.get("authority_user_id");
+            User authorityUser = userDao.queryById(authorityUserId);
+            app.put("authority_name",authorityUser.getName());
+            if (app.get("donee_id") != null) {
+                int doneeUserId = (Integer)app.get("donee_user_id");
+
+                User doneeUser = userDao.queryById(doneeUserId);
+                app.put("donee_name",doneeUser.getName());
+            }else {
+                app.put("donee_name","群体");
+            }
+        }
+        return applications;
+    }
+
+    @Override
+    public List<Map<String, Object>> queryRunOrderByUrgent(Application application) {
+        //先查询紧急的
+        int status[] = {2};       //正在进行中的项目
+        int urgents[] = {2};       //紧急的项目
+        List<Map<String,Object>> applications = this.applicationDao.queryRunUrgent(application,status,urgents);
+        for (Map<String,Object> app: applications) {
+            int authorityUserId = (Integer) app.get("authority_user_id");
+            User authorityUser = userDao.queryById(authorityUserId);
+            app.put("authority_name",authorityUser.getName());
+        }
+        if (applications.size()<5) {
+            int urgents1[] = {0,1};
+            List<Map<String,Object>> applications1 = this.applicationDao.queryRunUrgent(application,status,urgents1);
+            for (Map<String,Object> app: applications1) {
+                int authorityUserId = (Integer) app.get("authority_user_id");
+                User authorityUser = userDao.queryById(authorityUserId);
+                app.put("authority_name",authorityUser.getName());
+                applications.add(app);
+                if (applications.size() == 5) {
+                    break;
+                }
+            }
+        }
+        return applications;
+    }
+
+    /**
+     * 按分类查询通过审核的项目 limit限制
+     * @param application
+     * @param limit
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> queryRun(Application application, Integer limit) {
+        List<Map<String,Object>> applications1 = this.applicationDao.queryRun(application,limit);
+        for (Map<String,Object> app: applications1) {
+            int authorityUserId = (Integer) app.get("authority_user_id");
+            User authorityUser = userDao.queryById(authorityUserId);
+            app.put("authority_name",authorityUser.getName());
+        }
+        return applications1;
+    }
+
+    /**
+     * 按分类、关键词、紧急状态查询通过审核的项目
+     * @param application
+     * @param keywords
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> queryApplicationList(Application application, String keywords) {
+        int urgent[] = {2};
+        List<Map<String,Object>> applications = this.applicationDao.queryApplicationList(application,keywords,urgent);
+        for (Map<String,Object> app: applications) {
+            int authorityUserId = (Integer) app.get("authority_user_id");
+            User authorityUser = userDao.queryById(authorityUserId);
+            app.put("authority_name",authorityUser.getName());
+        }
+        int urgent1[] = {0,1};
+        List<Map<String,Object>> applications1 = this.applicationDao.queryApplicationList(application,keywords,urgent1);
+        for (Map<String,Object> app: applications1) {
+            int authorityUserId = (Integer) app.get("authority_user_id");
+            User authorityUser = userDao.queryById(authorityUserId);
+            app.put("authority_name",authorityUser.getName());
+            applications.add(app);
+        }
+        return applications;
     }
 }

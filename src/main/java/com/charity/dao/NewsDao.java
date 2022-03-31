@@ -62,4 +62,6 @@ public interface NewsDao {
      */
     int deleteById(Integer id);
 
+    List<News> search(@Param("keywords") String keywords,@Param("news") News news);
+
 }

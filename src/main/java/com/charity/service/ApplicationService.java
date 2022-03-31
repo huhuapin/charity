@@ -29,7 +29,15 @@ public interface ApplicationService {
      */
     List<Application> queryAllByLimit(int offset, int limit);
 
+    /**
+     * 查询所有申请
+     * @param application
+     * @return
+     */
     List<Map<String, Object>> queryAll(Application application);
+
+
+    List<Map<String, Object>> queryRunOrderByUrgent(Application application);
 
     /**
      * 新增数据
@@ -56,5 +64,15 @@ public interface ApplicationService {
     boolean deleteById(Integer id);
 
     int count(Application application);
+
+    int setPriority(Application application);
+
+    List<Map<String,Object>> search(Integer authorityId,String title,Integer status);
+
+
+    List<Map<String,Object>> queryRun(Application application,Integer limit);
+
+    List<Map<String, Object>> queryApplicationList(Application application, String keywords);
+
 
 }

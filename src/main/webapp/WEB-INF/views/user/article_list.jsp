@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: hasee
@@ -28,88 +29,30 @@
                     信息公开
                 </h2>
                 <div class="article-container">
+                    <c:forEach items="${articles}" var="article">
                 <div class="article-list">
-                    <figure><img  lay-src="${pageContext.request.contextPath}/img/application_img.jpg"></figure>
+                    <figure><img  lay-src="${pageContext.request.contextPath}${article.thumb}"></figure>
                     <ul>
                         <h3>
-                            <a href="article_details.html">关于申报第十一届“中华慈善奖”候选对象的公示</a>
+                            <a href="${pageContext.request.contextPath}/article_detail?id=${article.id}">${article.title}</a>
                         </h3>
-                        <p>按照“民函〔2019〕91号民政部关于开展第十一届‘中华慈善奖’评选表彰活动的通知”和“民函〔2020〕39号民政部关于调整第十一届‘中华慈善奖’有关安排的通知”。。。</p>
+                        <p>${article.description}</p>
                         <p class="autor info">
-                            <span class="lm f_l"><a href="#">中国慈善基金总会</a></span>
-                            <span class="datetime">2020-06-01</span>
+                            <span class="lm f_l"><a href="#">${article.authorityName}</a></span>
+                            <span class="datetime">${article.stringTime}</span>
                     </ul>
                 </div>
-                    <div class="article-list">
-                        <figure><img  lay-src="${pageContext.request.contextPath}/img/application_img.jpg"></figure>
-                        <ul>
-                            <h3>
-                                <a href="article_details.html">关于申报第十一届“中华慈善奖”候选对象的公示</a>
-                            </h3>
-                            <p>按照“民函〔2019〕91号民政部关于开展第十一届‘中华慈善奖’评选表彰活动的通知”和“民函〔2020〕39号民政部关于调整第十一届‘中华慈善奖’有关安排的通知”。。。</p>
-                            <p class="autor info">
-                                <span class="lm f_l"><a href="#">中国慈善基金总会</a></span>
-                                <span class="datetime">2020-06-01</span>
-                        </ul>
-                    </div>
-                    <div class="article-list">
-                        <figure><img  lay-src="${pageContext.request.contextPath}/img/application_img.jpg"></figure>
-                        <ul>
-                            <h3>
-                                <a href="article_details.html">关于申报第十一届“中华慈善奖”候选对象的公示</a>
-                            </h3>
-                            <p>按照“民函〔2019〕91号民政部关于开展第十一届‘中华慈善奖’评选表彰活动的通知”和“民函〔2020〕39号民政部关于调整第十一届‘中华慈善奖’有关安排的通知”。。。</p>
-                            <p class="autor info">
-                                <span class="lm f_l"><a href="#">中国慈善基金总会</a></span>
-                                <span class="datetime">2020-06-01</span>
-                        </ul>
-                    </div>
-                    <div class="article-list">
-                        <figure><img  lay-src="${pageContext.request.contextPath}/img/application_img.jpg"></figure>
-                        <ul>
-                            <h3>
-                                <a href="article_details.html">关于申报第十一届“中华慈善奖”候选对象的公示</a>
-                            </h3>
-                            <p>按照“民函〔2019〕91号民政部关于开展第十一届‘中华慈善奖’评选表彰活动的通知”和“民函〔2020〕39号民政部关于调整第十一届‘中华慈善奖’有关安排的通知”。。。</p>
-                            <p class="autor info">
-                                <span class="lm f_l"><a href="#">中国慈善基金总会</a></span>
-                                <span class="datetime">2020-06-01</span>
-                        </ul>
-                    </div>
-                    <div class="article-list">
-                        <figure><img  lay-src="${pageContext.request.contextPath}/img/application_img.jpg"></figure>
-                        <ul>
-                            <h3>
-                                <a href="article_details.html">关于申报第十一届“中华慈善奖”候选对象的公示</a>
-                            </h3>
-                            <p>按照“民函〔2019〕91号民政部关于开展第十一届‘中华慈善奖’评选表彰活动的通知”和“民函〔2020〕39号民政部关于调整第十一届‘中华慈善奖’有关安排的通知”。。。</p>
-                            <p class="autor info">
-                                <span class="lm f_l"><a href="#">中国慈善基金总会</a></span>
-                                <span class="datetime">2020-06-01</span>
-                        </ul>
-                    </div>
-                    <div class="article-list">
-                        <figure><img  lay-src="${pageContext.request.contextPath}/img/application_img.jpg"></figure>
-                        <ul>
-                            <h3>
-                                <a href="article_details.html">关于申报第十一届“中华慈善奖”候选对象的公示</a>
-                            </h3>
-                            <p>按照“民函〔2019〕91号民政部关于开展第十一届‘中华慈善奖’评选表彰活动的通知”和“民函〔2020〕39号民政部关于调整第十一届‘中华慈善奖’有关安排的通知”。。。</p>
-                            <p class="autor info">
-                                <span class="lm f_l"><a href="#">中国慈善基金总会</a></span>
-                                <span class="datetime">2020-06-01</span>
-                        </ul>
+                    </c:forEach>
                     </div>
                     <div id="page"></div>
                 </div>
             </div>
-        </div>
         <jsp:include page="layout/rside.jsp"></jsp:include>
     </div>
 </div>
 <div class="footer">
     <hr class="layui-bg-red">
-    <p><a href="http://itdaima.com/">山东理工大学</a> 2020 &copy; <a href="#">版权所有</a></p>
+    <p><a href="https://www.sdut.edu.cn/">山东理工大学</a> 2020 &copy; <a href="#">版权所有</a></p>
     <p>慈善捐助系统</p>
 </div>
 <script src="${pageContext.request.contextPath}/layuiadmin/layui/layui.js" type="text/javascript"></script>
@@ -123,17 +66,6 @@
         });
     });
 
-    //图片轮播
-    layui.use('carousel', function(){
-        var carousel = layui.carousel;
-        //建造实例
-        carousel.render({
-            elem: '#images-carousel'
-            ,width: '100%' //设置容器宽度
-            ,arrow: 'always' //始终显示箭头
-            ,anim: 'fade' //切换动画方式
-        });
-    });
 
     //返回到顶部
     layui.use('util', function(){
@@ -171,7 +103,7 @@
         //只显示上一页、下一页
         laypage.render({
             elem: 'page'
-            ,count: 100
+            ,count: 1
             //['count', 'prev', 'page', 'next', 'limit', 'skip']
             ,layout: ['prev', 'page', 'next']
             ,jump: function(obj, first){

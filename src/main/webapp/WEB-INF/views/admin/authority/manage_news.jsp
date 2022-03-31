@@ -15,6 +15,16 @@
     <title>慈善机构管理</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layuiadmin/style/admin.css" media="all">
+    <style>
+        .layui-table-tips-main {
+            max-width: max-content;
+            max-height: max-content;
+            margin-top:0!important;
+        }
+        .layui-table-tips {
+            top: 0 !important;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="./layout/index.jsp"></jsp:include>
@@ -28,7 +38,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">新闻标题</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="author" placeholder="请输入" autocomplete="off"
+                                <input type="text" name="keywords" placeholder="请输入" autocomplete="off"
                                        class="layui-input">
                             </div>
                         </div>
@@ -44,7 +54,7 @@
 
                 <div class="layui-card-body">
                     <div style="padding-bottom: 10px;">
-                        <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
+                        <a href="${pageContext.request.contextPath}/authority/addNews"><button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button></a>
                     </div>
 
                     <table id="LAY-app-content-list" lay-filter="LAY-app-content-list"></table>
@@ -68,35 +78,34 @@
 
                 //执行重载
                 table.reload('LAY-app-content-list', {
-                    where: field
+                    where: field,
+                    url:"${pageContext.request.contextPath}/authority/searchNews",
+                    method:"post",
+                    page: {
+                        curr: 1
+                    },
                 });
             });
 
             //第一个实例
             table.render({
                 elem: '#LAY-app-content-list'
-                ,data : [{
-                    "id": "001"
-                    ,"title": "孩子们吃上了肉"
-                    ,"description": "春雷行动在进行，我们争取让每个孩子都吃上饭"
-                    ,"thumb": "这里是缩略图"
-                    ,"content": "通过中华美食的多个侧面，来展现食物给中国人生活带来的仪式、伦理等方面的文化；见识中国特色食材以及与食物相关、构成中国美食特有气质的一系列元素；了解中华饮食文化的精致和源远流长"
-                    ,"time": 20121204
-                    ,"click": 858
-                }]
+                ,data : ${newsList}
                 ,page: true //开启分页
                 ,cols: [[ //表头
                     {field: 'id', title: 'ID', sort: true, fixed: 'left'}
                     ,{field: 'title', title: '标题', sort: true}
                     ,{field: 'description', title: '描述'}
-                    ,{field: 'thumb', title: '缩略图'}
+                    ,{field: 'thumb', title: '缩略图',templet:function (d) {
+                            return '<img src="${pageContext.request.contextPath}'+d.thumb+'"/>'
+                        }}
                     ,{field: 'content', title: '内容'}
-                    ,{field: 'uploadtime', title: '日期', sort: true}
-                    ,{field: 'status', title: '点击量',sort: true}
+                    ,{field: 'time', title: '日期', sort: true}
+                    // ,{field: 'click', title: '点击量',sort: true}
                     ,{field: 'caozuo',title: '操作',templet :function (d) {
-                            return '<a href="${pageContext.request.contextPath}/add/'+d.id +'" class="layui-btn">添加</a>'
+                            <%--return '<a href="${pageContext.request.contextPath}/add/'+d.id +'" class="layui-btn">添加</a>'--%>
 
-                            // <div class="layui-table-cell laytable-cell-1-0-7"> <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a> </div>
+                            return '<div class="layui-table-cell laytable-cell-1-0-7"> <a class="layui-btn layui-btn-normal layui-btn-xs" href="${pageContext.request.contextPath}/authority/editNews?id='+d.id+'"><i class="layui-icon layui-icon-edit"></i>编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs" href="${pageContext.request.contextPath}/authority/deleteNews?id='+d.id+'"><i class="layui-icon layui-icon-delete"></i>删除</a> </div>';
                         }}
                 ]]
             })

@@ -42,6 +42,11 @@ public class NewsServiceImpl implements NewsService {
         return this.newsDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<News> queryAll(News news) {
+        return this.newsDao.queryAll(news);
+    }
+
     /**
      * 新增数据
      *
@@ -75,5 +80,10 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public boolean deleteById(Integer id) {
         return this.newsDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public List<News> search(String title,News news) {
+        return this.newsDao.search(title,news);
     }
 }

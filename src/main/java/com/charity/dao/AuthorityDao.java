@@ -21,6 +21,8 @@ public interface AuthorityDao {
      */
     Authority queryById(Integer id);
 
+    Authority queryByUserId(Integer id);
+
     /**
      * 查询指定行数据
      *
@@ -73,4 +75,7 @@ public interface AuthorityDao {
     int count();
 
     double totalFound();
+
+
+
 }

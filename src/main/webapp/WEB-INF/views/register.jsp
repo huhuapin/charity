@@ -13,7 +13,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>登入 - layuiAdmin</title>
+    <title>注册 - layuiAdmin</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -59,25 +59,25 @@
                                     <input type="hidden" name="role" value="2">
                                     <label class="layui-form-label" for="username">用户名</label>
                                     <div class="layui-input-block">
-                                        <input id="username" type="text" name="username" lay-verify="required|account" placeholder="请输入用户名" autocomplete="off" class="layui-input" value="admin">
+                                        <input id="username" type="text" name="username" lay-verify="required|account" placeholder="请输入用户名" autocomplete="off" class="layui-input" value="">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <label class="layui-form-label" for="username">密码</label>
                                     <div class="layui-input-block">
-                                        <input  type="text" name="password" lay-verify="required|account" placeholder="请输入密码" autocomplete="off" class="layui-input" value="admin">
+                                        <input  type="text" name="password" lay-verify="required|account" placeholder="请输入密码" autocomplete="off" class="layui-input" value="">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <label class="layui-form-label" for="username">确认密码</label>
                                     <div class="layui-input-block">
-                                        <input  type="text" name="password_confirm" lay-verify="required|account" placeholder="请再次输入密码" autocomplete="off" class="layui-input" value="admin">
+                                        <input  type="text" name="password_confirm" lay-verify="required|account" placeholder="请再次输入密码" autocomplete="off" class="layui-input" value="">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <label class="layui-form-label" for="username">姓名</label>
                                     <div class="layui-input-block">
-                                        <input  type="text" name="name" lay-verify="required|account" placeholder="请输入真实姓名" autocomplete="off" class="layui-input" value="admin">
+                                        <input  type="text" name="name" lay-verify="required|account" placeholder="请输入真实姓名" autocomplete="off" class="layui-input" value="">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -90,7 +90,7 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label" for="username">联系方式</label>
                                     <div class="layui-input-block">
-                                        <input  type="text" name="tel" lay-verify="required|phone" placeholder="请输入手机号" autocomplete="off" class="layui-input" value="17855300022">
+                                        <input  type="text" name="tel" lay-verify="required|phone" placeholder="请输入手机号" autocomplete="off" class="layui-input" value="">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -104,25 +104,25 @@
                                     <input type="hidden" name="role" value="2">
                                     <label class="layui-form-label">用户名</label>
                                     <div class="layui-input-block">
-                                        <input id="" type="text" name="username" lay-verify="required|account" placeholder="请输入用户名" autocomplete="off" class="layui-input" value="admin">
+                                        <input id="" type="text" name="username" lay-verify="required|account" placeholder="请输入用户名" autocomplete="off" class="layui-input" value="">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">密码</label>
                                     <div class="layui-input-block">
-                                        <input  type="text" name="password" lay-verify="required|account" placeholder="请输入密码" autocomplete="off" class="layui-input" value="admin">
+                                        <input  type="text" name="password" lay-verify="required|account" placeholder="请输入密码" autocomplete="off" class="layui-input" value="">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">确认密码</label>
                                     <div class="layui-input-block">
-                                        <input  type="text" name="password_confirm" lay-verify="required|account" placeholder="请再次输入密码" autocomplete="off" class="layui-input" value="admin">
+                                        <input  type="text" name="password_confirm" lay-verify="required|account" placeholder="请再次输入密码" autocomplete="off" class="layui-input" value="">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">姓名</label>
                                     <div class="layui-input-block">
-                                        <input  type="text" name="name" lay-verify="required|account" placeholder="请输入真实姓名" autocomplete="off" class="layui-input" value="admin">
+                                        <input  type="text" name="name" lay-verify="required|account" placeholder="请输入真实姓名" autocomplete="off" class="layui-input" value="">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -135,7 +135,7 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label" for="username">联系方式</label>
                                     <div class="layui-input-block">
-                                        <input  type="text" name="tel" lay-verify="required|phone" placeholder="请输入手机号" autocomplete="off" class="layui-input" value="17855300022">
+                                        <input  type="text" name="tel" lay-verify="required|phone" placeholder="请输入手机号" autocomplete="off" class="layui-input" value="">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">

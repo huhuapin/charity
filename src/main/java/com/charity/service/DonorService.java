@@ -19,6 +19,9 @@ public interface DonorService {
      */
     Donor queryById(Integer id);
 
+    Donor queryByUserId(Integer id);
+
+
     /**
      * 查询多条数据
      *

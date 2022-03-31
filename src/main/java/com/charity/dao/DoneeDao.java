@@ -3,6 +3,7 @@ package com.charity.dao;
 import com.charity.entity.Donee;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Donee)表数据库访问层
@@ -19,6 +20,9 @@ public interface DoneeDao {
      * @return 实例对象
      */
     Donee queryById(Integer id);
+
+    Donee queryByUserId(Integer id);
+
 
     /**
      * 查询指定行数据
@@ -37,6 +41,9 @@ public interface DoneeDao {
      * @return 对象列表
      */
     List<Donee> queryAll(Donee donee);
+
+
+    List<Map<String,Object>> queryAllInfo(Donee donee);
 
     /**
      * 新增数据

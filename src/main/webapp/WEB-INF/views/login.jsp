@@ -12,7 +12,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>用户注册</title>
+    <title>用户登录</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -43,27 +43,27 @@
         <div class="layui-form login-form">
             <form class="layui-form" action="${pageContext.request.contextPath}/user/login" method="post">
                 <div class="layui-form-item logo-title">
-                    <h1>LayuiMini后台登录</h1>
+                    <h1>慈善捐助系统后台登录</h1>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-username" for="username"></label>
-                    <input id="username" type="text" name="username" lay-verify="required|account" placeholder="请输入用户名" autocomplete="off" class="layui-input" value="admin">
+                    <input id="username" type="text" name="username" lay-verify="required|account" placeholder="请输入用户名" autocomplete="off" class="layui-input" value="">
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-password" for="password"></label>
-                    <input type="password" id="password" name="password" lay-verify="required|password" placeholder="请输入密码" autocomplete="off" class="layui-input" value="123456">
+                    <input type="password" id="password" name="password" lay-verify="required|password" placeholder="请输入密码" autocomplete="off" class="layui-input" value="">
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-vercode" for="captcha"></label>
                     <%--                    <input type="text" name="captcha" id="captcha" lay-verify="required|captcha" placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="xszg">--%>
-                    <input type="text" name="captcha" id="captcha"  placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="xszg">
+                    <input type="text" name="captcha" id="captcha"  placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="">
                     <div class="captcha-img">
-                        <img id="captchaPic" src="../images/captcha.jpg">
+                        <img id="captchaPic" src="${pageContext.request.contextPath}/user/checkCode">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <%--                    <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住密码"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>记住密码</span><i class="layui-icon layui-icon-ok"></i></div>--%>
-                    <a href="reg.html" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
+                    <a href="${pageContext.request.contextPath}/user/register" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
                 </div>
                 <div class="layui-form-item">
                     <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="login">登 入</button>
@@ -105,6 +105,12 @@
                 return false;
             }
         });
+
+        $("#captchaPic").click(function () {
+            var t = new Date();
+            var time = t.getTime();
+            $(this).attr("src","${pageContext.request.contextPath}/user/checkCode?t="+time);
+        })
     });
 </script>
 

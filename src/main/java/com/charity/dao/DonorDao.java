@@ -20,6 +20,7 @@ public interface DonorDao {
      */
     Donor queryById(Integer id);
 
+    Donor queryByUserId(Integer id);
     /**
      * 查询指定行数据
      *

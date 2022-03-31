@@ -32,7 +32,7 @@
     </select>
 
     <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="DonateMap">
+    <select id="queryAll" resultType="java.util.Map">
         select
           id, donor_id, application_id, money, is_anoymous, message, prove, date, status, authority_id
         from charity.donate
@@ -68,6 +68,7 @@
                 and authority_id = #{authorityId}
             </if>
         </where>
+        order by date desc
     </select>
 
     <!--新增所有列-->
@@ -160,6 +161,52 @@
                 and authority_id = #{authorityId}
             </if>
         </where>
+        group by date
+        order by date desc
+    </select>
+
+<!--    查询今日捐赠人数-->
+    <select id="todayDonor" resultType="java.util.Map">
+        select donor_id,sum(money) as money from donate
+        <where>
+            DATE_SUB(CURDATE(), INTERVAL 1 DAY) &lt;= date(date)
+            <if test="authorityId != null">
+                and authority_id = #{authorityId}
+            </if>
+        </where>
+        group by donor_id
+    </select>
+
+<!--    查询捐赠次数-->
+    <select id="queryTimesAll" resultType="java.lang.Integer">
+        select coalesce(count(id),0) from donate
+        <where>
+            <if test="donorId !=null">
+                and donor_id = #{donorId}
+            </if>
+            <if test="applicationId !=null">
+                and application_id = #{applicationId}
+            </if>
+            <if test="authorityId !=null">
+                and authority_id = #{authorityId}
+            </if>
+        </where>
+    </select>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAllByDoneeId" resultType="java.util.Map">
+        select
+        donate.id, donor_id, application_id, application.title as application_name,money, is_anoymous, message, prove, date, donate.status, donate.authority_id
+        from charity.donate,charity.application
+        where donate.application_id = application.id and application.donee_id = #{doneeId}
+        order by date desc
+    </select>
+
+    <!--    根据条件按天聚合查询捐赠金额-->
+    <select id="queryMoneyDayByDoneeId" resultType="java.util.HashMap">
+        select coalesce(sum(money),0) as money,DATE(date) as date from donate,application
+        where    DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(date) and donate.application_id = application.id and application.donee_id = #{doneeId}
         group by date
         order by date desc
     </select>

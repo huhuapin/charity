@@ -6,6 +6,7 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="found" column="found" jdbcType="INTEGER"/>
+        <result property="img" column="img" jdbcType="VARCHAR"/>
         <result property="people" column="people" jdbcType="INTEGER"/>
         <result property="description" column="description" jdbcType="OTHER"/>
         <result property="tel" column="tel" jdbcType="VARCHAR"/>
@@ -19,15 +20,24 @@
     <!--查询单个-->
     <select id="queryById" resultMap="AuthorityMap">
         select
-          id, user_id, found, people, description, tel, address, represent, created_time, status
+          id, user_id, found,img, people, description, tel, address, represent, created_time, status
+        from charity.authority
+        where id = #{id}
+    </select>
+
+    <!--查询单个-->
+    <select id="queryByUserId" resultMap="AuthorityMap">
+        select
+          id, user_id, found,img, people, description, tel, address, represent, created_time, status
         from charity.authority
         where user_id = #{id}
     </select>
 
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="AuthorityMap">
         select
-          id, user_id, found, people, description, tel, address, represent, created_time, status
+          id, user_id, found,img, people, description, tel, address, represent, created_time, status
         from charity.authority
         limit #{offset}, #{limit}
     </select>
@@ -35,12 +45,12 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll"  resultType="java.util.Map">
         select
-          authority.id, name, last_login,user_id, found, people, description, tel, address, represent, created_time, status
+          authority.id, name, last_login,user_id, found,img, people, description, tel, address, represent, created_time, status
         from charity.authority,charity.user
         <where>
             authority.user_id = user.id
             <if test="id != null">
-                and id = #{id}
+                and authority.id = #{id}
             </if>
             <if test="userId != null">
                 and user_id = #{userId}
@@ -76,14 +86,14 @@
     <!--通过name作为筛选条件查询-->
     <select id="queryByName"  resultType="java.util.Map">
         select
-        user.id, name, last_login,user_id, found, people, description, tel, address, represent, created_time, status
+        user.id, name, last_login,user_id, found, img, people, description, tel, address, represent, created_time, status
         from charity.authority,charity.user
         where authority.user_id = user.id and user.name like concat('%',#{name},'%')
     </select>
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into charity.authority(user_id, found, people, description, tel, address, represent, created_time, status)
-        values (#{userId}, #{found}, #{people}, #{description}, #{tel}, #{address}, #{represent}, #{createdTime}, #{status})
+        insert into charity.authority(user_id, found, img, people, description, tel, address, represent, created_time, status)
+        values (#{userId}, #{found},#{img}, #{people}, #{description}, #{tel}, #{address}, #{represent}, #{createdTime}, #{status})
     </insert>
 
     <!--通过主键修改数据-->
@@ -95,6 +105,9 @@
             </if>
             <if test="found != null">
                 found = #{found},
+            </if>
+            <if test="img != null">
+                img = #{img},
             </if>
             <if test="people != null">
                 people = #{people},
@@ -128,11 +141,12 @@
 
     <!--查询慈善机构数-->
     <select id="count" resultType="java.lang.Integer">
-        select count(*) from authority
+        select count(id) from authority
     </select>
 
 <!--    查询全部资金数-->
     <select id="totalFound" resultType="java.lang.Double">
         select sum(found) from authority
     </select>
+
 </mapper>

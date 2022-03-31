@@ -6,7 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -41,135 +43,95 @@
         <div class="layui-col-md9">
             <div class="article-main">
                 <h2>
-                    意外住院
-                    <span><a href="#">查看更多</a></span>
+                    ${category0.category}
+                    <span><a href="${pageContext.request.contextPath}/application_list?categoryId=${category1.id}">查看更多</a></span>
                 </h2>
                 <div class="article-container">
+                    <c:forEach items="${application0}" var="application">
                 <div class="article-list">
-                    <figure><img  lay-src="${pageContext.request.contextPath}/img/application_img.jpg"></figure>
+                    <figure><img  lay-src='${pageContext.request.contextPath}${application.get("img")}'></figure>
                     <ul>
                         <h3>
-                            <a href="article_details.html">父亲意外住院，请帮帮我</a>
+                            <a href='${pageContext.request.contextPath}/application_detail?id=${application.get("id")}'>${application.get("title")}</a>
                         </h3>
-                        <p>年轻的时候父亲烟酒特别重，2014年因脑血栓住院，入院治疗半个月后出院了。很庆幸，人还能正常走路。当时他答应我，烟和酒都不会再碰了，但是事实不是那样，烟越来越重，酒自己也偷喝。现如今他又住院了，被确诊是结核性脑膜炎，看他现在在病床上经受病痛的折磨，时而同情，时而愤怒。。。。。。...</p>
+                        <p class="jianjie"><c:out value="${fn:substring(application.get(\"description\"), 0, 180)}" escapeXml="true"/></p>
                         <p class="autor">
-                            <span class="lm f_l"><a href="#">中国慈善基金总会</a></span>
-                            <span class="dtime f_l">5558人捐赠</span>
-                            <span class="viewnum f_r">12121213元已募</span>
+                            <span class="lm f_l"><a href='${pageContext.request.contextPath}/authority_detail?id=${application.get("authority_id")}'>${application.get("authority_name")}</a></span>
+                            <span class="dtime f_l">${application.get("donoor_num")} 人捐赠</span>
+                            <span class="viewnum f_r">${application.get("receive")} 元已募</span>
                     </ul>
                 </div>
-                <div class="article-list">
-                    <figure><img lay-src="../static/images/01.jpg"></figure>
-                    <ul>
-                        <h3>
-                            <a href="article_details.html">父亲意外住院，请帮帮我</a>
-                        </h3>
-                        <p>年轻的时候父亲烟酒特别重，2014年因脑血栓住院，入院治疗半个月后出院了。很庆幸，人还能正常走路。当时他答应我，烟和酒都不会再碰了，但是事实不是那样，烟越来越重，酒自己也偷喝。现如今他又住院了，被确诊是结核性脑膜炎，看他现在在病床上经受病痛的折磨，时而同情，时而愤怒。。。。。。...</p>
-                        <p class="autor">
-                            <span class="lm f_l"><a href="#">中国慈善基金总会</a></span>
-                            <span class="dtime f_l">5558人捐赠</span>
-                            <span class="viewnum f_r">12121213元已募</span>
-                    </ul>
+                    </c:forEach>
                 </div>
+            </div>
+
+            <div class="article-main">
+                <h2>
+                    ${category1.category}
+                    <span><a href="${pageContext.request.contextPath}/application_list?categoryId=${category1.id}">查看更多</a></span>
+                </h2>
+                <div class="article-container">
+                    <c:forEach items="${application1}" var="application">
+                        <div class="article-list">
+                            <figure><img  lay-src='${pageContext.request.contextPath}${application.get("img")}'></figure>
+                            <ul>
+                                <h3>
+                                    <a href='${pageContext.request.contextPath}/application_detail?id=${application.get("id")}'>${application.get("title")}</a>
+                                </h3>
+                                <p class="jianjie"><c:out value="${fn:substring(application.get(\"description\"), 0, 680)}" escapeXml="true"/></p>
+                                <p class="autor">
+                                    <span class="lm f_l"><a href='${pageContext.request.contextPath}/authority_detail?id=${application.get("authority_id")}'>${application.get("authority_name")}</a></span>
+                                    <span class="dtime f_l">${application.get("donoor_num")} 人捐赠</span>
+                                    <span class="viewnum f_r">${application.get("receive")} 元已募</span>
+                            </ul>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
             <div class="article-main">
                 <h2>
-                    意外住院
-                    <span><a href="#">查看更多</a></span>
+                    ${category2.category}
+                    <span><a href="${pageContext.request.contextPath}/application_list?categoryId=${category1.id}">查看更多</a></span>
                 </h2>
-
-                <div class="article-list">
-                    <figure><img lay-src="../static/images/01.jpg"></figure>
-                    <ul>
-                        <h3>
-                            <a href="article_details.html">父亲意外住院，请帮帮我</a>
-                        </h3>
-                        <p>年轻的时候父亲烟酒特别重，2014年因脑血栓住院，入院治疗半个月后出院了。很庆幸，人还能正常走路。当时他答应我，烟和酒都不会再碰了，但是事实不是那样，烟越来越重，酒自己也偷喝。现如今他又住院了，被确诊是结核性脑膜炎，看他现在在病床上经受病痛的折磨，时而同情，时而愤怒。。。。。。...</p>
-                        <p class="autor">
-                            <span class="lm f_l"><a href="#">中国慈善基金总会</a></span>
-                            <span class="dtime f_l">5558人捐赠</span>
-                            <span class="viewnum f_r">12121213元已募</span>
-                    </ul>
-                </div>
-                <div class="article-list">
-                    <figure><img lay-src="../static/images/01.jpg"></figure>
-                    <ul>
-                        <h3>
-                            <a href="article_details.html">父亲意外住院，请帮帮我</a>
-                        </h3>
-                        <p>年轻的时候父亲烟酒特别重，2014年因脑血栓住院，入院治疗半个月后出院了。很庆幸，人还能正常走路。当时他答应我，烟和酒都不会再碰了，但是事实不是那样，烟越来越重，酒自己也偷喝。现如今他又住院了，被确诊是结核性脑膜炎，看他现在在病床上经受病痛的折磨，时而同情，时而愤怒。。。。。。...</p>
-                        <p class="autor">
-                            <span class="lm f_l"><a href="#">中国慈善基金总会</a></span>
-                            <span class="dtime f_l">5558人捐赠</span>
-                            <span class="viewnum f_r">12121213元已募</span>
-                    </ul>
+                <div class="article-container">
+                    <c:forEach items="${application2}" var="application">
+                        <div class="article-list">
+                            <figure><img  lay-src='${pageContext.request.contextPath}${application.get("img")}'></figure>
+                            <ul>
+                                <h3>
+                                    <a href='${pageContext.request.contextPath}/application_detail?id=${application.get("id")}'>${application.get("title")}</a>
+                                </h3>
+                                <p class="jianjie"><c:out value="${fn:substring(application.get(\"description\"), 0, 680)}" escapeXml="true"/></p>
+                                <p class="autor">
+                                    <span class="lm f_l"><a href='${pageContext.request.contextPath}/authority_detail?id=${application.get("authority_id")}'>${application.get("authority_name")}</a></span>
+                                    <span class="dtime f_l">${application.get("donoor_num")} 人捐赠</span>
+                                    <span class="viewnum f_r">${application.get("receive")} 元已募</span>
+                            </ul>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
             <div class="article-main">
                 <h2>
-                    意外住院
-                    <span><a href="#">查看更多</a></span>
+                    ${category3.category}
+                    <span><a href="${pageContext.request.contextPath}/application_list?categoryId=${category1.id}">查看更多</a></span>
                 </h2>
-
-                <div class="article-list">
-                    <figure><img lay-src="../static/images/01.jpg"></figure>
-                    <ul>
-                        <h3>
-                            <a href="article_details.html">父亲意外住院，请帮帮我</a>
-                        </h3>
-                        <p>年轻的时候父亲烟酒特别重，2014年因脑血栓住院，入院治疗半个月后出院了。很庆幸，人还能正常走路。当时他答应我，烟和酒都不会再碰了，但是事实不是那样，烟越来越重，酒自己也偷喝。现如今他又住院了，被确诊是结核性脑膜炎，看他现在在病床上经受病痛的折磨，时而同情，时而愤怒。。。。。。...</p>
-                        <p class="autor">
-                            <span class="lm f_l"><a href="#">中国慈善基金总会</a></span>
-                            <span class="dtime f_l">5558人捐赠</span>
-                            <span class="viewnum f_r">12121213元已募</span>
-                    </ul>
-                </div>
-                <div class="article-list">
-                    <figure><img lay-src="../static/images/01.jpg"></figure>
-                    <ul>
-                        <h3>
-                            <a href="article_details.html">父亲意外住院，请帮帮我</a>
-                        </h3>
-                        <p>年轻的时候父亲烟酒特别重，2014年因脑血栓住院，入院治疗半个月后出院了。很庆幸，人还能正常走路。当时他答应我，烟和酒都不会再碰了，但是事实不是那样，烟越来越重，酒自己也偷喝。现如今他又住院了，被确诊是结核性脑膜炎，看他现在在病床上经受病痛的折磨，时而同情，时而愤怒。。。。。。...</p>
-                        <p class="autor">
-                            <span class="lm f_l"><a href="#">中国慈善基金总会</a></span>
-                            <span class="dtime f_l">5558人捐赠</span>
-                            <span class="viewnum f_r">12121213元已募</span>
-                    </ul>
-                </div>
-            </div>
-            <div class="article-main">
-                <h2>
-                    意外住院
-                    <span><a href="#">查看更多</a></span>
-                </h2>
-
-                <div class="article-list">
-                    <figure><img lay-src="../static/images/01.jpg"></figure>
-                    <ul>
-                        <h3>
-                            <a href="article_details.html">父亲意外住院，请帮帮我</a>
-                        </h3>
-                        <p>年轻的时候父亲烟酒特别重，2014年因脑血栓住院，入院治疗半个月后出院了。很庆幸，人还能正常走路。当时他答应我，烟和酒都不会再碰了，但是事实不是那样，烟越来越重，酒自己也偷喝。现如今他又住院了，被确诊是结核性脑膜炎，看他现在在病床上经受病痛的折磨，时而同情，时而愤怒。。。。。。...</p>
-                        <p class="autor">
-                            <span class="lm f_l"><a href="#">中国慈善基金总会</a></span>
-                            <span class="dtime f_l">5558人捐赠</span>
-                            <span class="viewnum f_r">12121213元已募</span>
-                    </ul>
-                </div>
-                <div class="article-list">
-                    <figure><img lay-src="../static/images/01.jpg"></figure>
-                    <ul>
-                        <h3>
-                            <a href="article_details.html">父亲意外住院，请帮帮我</a>
-                        </h3>
-                        <p>年轻的时候父亲烟酒特别重，2014年因脑血栓住院，入院治疗半个月后出院了。很庆幸，人还能正常走路。当时他答应我，烟和酒都不会再碰了，但是事实不是那样，烟越来越重，酒自己也偷喝。现如今他又住院了，被确诊是结核性脑膜炎，看他现在在病床上经受病痛的折磨，时而同情，时而愤怒。。。。。。...</p>
-                        <p class="autor">
-                            <span class="lm f_l"><a href="#">中国慈善基金总会</a></span>
-                            <span class="dtime f_l">5558人捐赠</span>
-                            <span class="viewnum f_r">12121213元已募</span>
-                    </ul>
+                <div class="article-container">
+                    <c:forEach items="${application3}" var="application">
+                        <div class="article-list">
+                            <figure><img  lay-src='${pageContext.request.contextPath}${application.get("img")}'></figure>
+                            <ul>
+                                <h3>
+                                    <a href='${pageContext.request.contextPath}/application_detail?id=${application.get("id")}'>${application.get("title")}</a>
+                                </h3>
+                                <p class="jianjie"><c:out value="${fn:substring(application.get(\"description\"), 0, 680)}" escapeXml="true"/></p>
+                                <p class="autor">
+                                    <span class="lm f_l"><a href='${pageContext.request.contextPath}/authority_detail?id=${application.get("authority_id")}'>${application.get("authority_name")}</a></span>
+                                    <span class="dtime f_l">${application.get("donoor_num")} 人捐赠</span>
+                                    <span class="viewnum f_r">${application.get("receive")} 元已募</span>
+                            </ul>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -178,12 +140,18 @@
 </div>
 <div class="footer">
     <hr class="layui-bg-red">
-    <p><a href="http://itdaima.com/">山东理工大学</a> 2020 &copy; <a href="#">版权所有</a></p>
+    <p><a href="https://www.sdut.edu.cn/">山东理工大学</a> 2020 &copy; <a href="#">版权所有</a></p>
     <p>慈善捐助系统</p>
 </div>
 <script src="${pageContext.request.contextPath}/layuiadmin/layui/layui.js" type="text/javascript"></script>
 <script type="text/javascript">
 
+    $('.jianjie').each(function (e) {
+        var s = $(this).text();
+        var dd=s.replace(/<\/?.+?>/g,"");
+        var dds=dd.replace(/ /g,"");//dds为得到后的内容
+        $(this).text(dds.substr(0,220));
+    })
     //注意：导航 依赖 element 模块，否则无法进行功能性操作
     layui.use('element', function(){
         var element = layui.element;
@@ -191,6 +159,7 @@
             console.log(elem.text());
         });
     });
+
 
     //图片轮播
     layui.use('carousel', function(){

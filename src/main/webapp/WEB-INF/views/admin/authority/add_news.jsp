@@ -28,7 +28,7 @@
                 <div class="layui-card">
                     <div class="layui-card-header">发布新闻</div>
                     <div class="layui-card-body" style="padding: 15px;">
-                        <form class="layui-form" action="" lay-filter="component-form-group">
+                        <form class="layui-form" action="${pageContext.request.contextPath}/authority/addNews" method="post" lay-filter="component-form-group">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">标题</label>
                                 <div class="layui-input-block">
@@ -38,29 +38,32 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">简介</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                                    <textarea name="description" id="" class="layui-textarea"></textarea>
                                 </div>
                             </div>
 
                             <div class="layui-form-item">
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">图片</label>
-                                    <div class="layui-input-inline">
-                                        <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">内容</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+                                <label class="layui-form-label">缩略图</label>
+                                <div class="layui-input-block">
+                                    <button type="button" class="layui-btn" id="test1">上传图片</button>
+                                    <div class="layui-upload-list">
+                                        <input type="hidden" name="thumb" class="layui-upload-file" value="">
+                                        <img class="layui-upload-img" id="demo1" src="">
+                                        <p id="demoText"></p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="layui-form-item layui-layout-admin">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">内容</label>
                                 <div class="layui-input-block">
-                                    <div class="layui-footer" style="left: 0;">
-                                        <button class="layui-btn" lay-submit="" lay-filter="component-form-demo1">立即提交</button>
-                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    <textarea name="content" id="content"></textarea>
+                                </div>
+                            </div>
+                                <div class="layui-form-item layui-layout-admin">
+                                    <div class="layui-input-block">
+                                        <div class="layui-footer" style="left: 0;">
+                                            <button class="layui-btn" lay-submit="" lay-filter="component-form-demo1">立即提交</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                     </div>
                                 </div>
                             </div>
@@ -78,18 +81,44 @@
         base: '${pageContext.request.contextPath}/layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index', 'form', 'laydate'], function(){
+    }).use(['index', 'form','layedit','upload'], function(){
         var $ = layui.$
             ,admin = layui.admin
             ,element = layui.element
             ,layer = layui.layer
-            ,laydate = layui.laydate
             ,form = layui.form;
+        var layedit = layui.layedit;
+        layedit.build('content',{
+            uploadImage : {
+                url:"${pageContext.request.contextPath}/upload/img",
+                type: "POST",
+                base_url:"${pageContext.request.contextPath}"
+            }
+        }) //建立编辑器
 
         form.render(null, 'component-form-group');
 
-        laydate.render({
-            elem: '#LAY-component-form-group-date'
+
+        //图片上传
+        var upload = layui.upload;
+        var uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            ,url: '${pageContext.request.contextPath}/upload/img' //上传接口
+            ,done: function(data){
+                //上传完毕回调
+                console.log(data);
+                if (data.code == 0) {
+                    $('#demo1').attr("src","${pageContext.request.contextPath}"+data.data.src);
+                    console.log(this.item);
+                    $("input[name='thumb']").val(data.data.src);
+                    layer.msg(data.message,{icon:1});
+                } else{
+                    layer.msg(data.message,{icon:1});
+                }
+            }
+            ,error: function(){
+                //请求异常回调
+            }
         });
 
         /* 自定义验证规则 */
@@ -99,28 +128,13 @@
                     return '标题至少得5个字符啊';
                 }
             }
-            ,pass: [/(.+){6,12}$/, '密码必须6到12位']
             ,content: function(value){
                 layedit.sync(editIndex);
             }
         });
 
-        /* 监听指定开关 */
-        form.on('switch(component-form-switchTest)', function(data){
-            layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
-                offset: '6px'
-            });
-            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
-        });
-
-        /* 监听提交 */
-        form.on('submit(component-form-demo1)', function(data){
-            parent.layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息'
-            })
-            return false;
-        });
     });
 </script>
+
 </body>
 </html>

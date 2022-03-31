@@ -30,7 +30,7 @@
 
   <!--配置前端控制器-->
   <servlet>
-    <servlet-name>dispatcherServlet</servlet-name>
+    <servlet-name>dispatcherSevlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <!--加载springmvc.xml配置文件-->
     <init-param>
@@ -40,8 +40,9 @@
     <!--启动服务器，创建该servlet-->
     <load-on-startup>1</load-on-startup>
   </servlet>
+
   <servlet-mapping>
-    <servlet-name>dispatcherServlet</servlet-name>
+    <servlet-name>dispatcherSevlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
@@ -70,7 +71,6 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:applicationContext.xml</param-value>
   </context-param>
-
 
 
 </web-app>

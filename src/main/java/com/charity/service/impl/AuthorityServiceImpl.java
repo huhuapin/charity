@@ -31,6 +31,11 @@ public class AuthorityServiceImpl implements AuthorityService {
         return this.authorityDao.queryById(id);
     }
 
+    @Override
+    public Authority queryByUserId(Integer id) {
+        return this.authorityDao.queryByUserId(id);
+    }
+
     /**
      * 查询多条数据
      *

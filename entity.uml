@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.charity.entity</OriginalElement>
+  <nodes>
+    <node x="440.0" y="449.0">com.charity.entity.User</node>
+    <node x="220.0" y="0.0">com.charity.entity.Authority</node>
+    <node x="440.0" y="0.0">com.charity.entity.Donate</node>
+    <node x="0.0" y="0.0">com.charity.entity.Application</node>
+    <node x="0.0" y="449.0">com.charity.entity.News</node>
+    <node x="660.0" y="0.0">com.charity.entity.Donee</node>
+    <node x="674.4735576923078" y="320.5048076923077">com.charity.entity.Category</node>
+    <node x="660.0" y="449.0">com.charity.entity.Trace</node>
+    <node x="220.0" y="449.0">com.charity.entity.Donor</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="0.9651972157772621" x="440.8112980769231" y="411.0" />
+  <SelectedNodes>
+    <node>com.charity.entity.Category</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -42,7 +42,7 @@
 
                 <div class="layui-card-body">
                     <div style="padding-bottom: 10px;">
-                        <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
+                        <a href="${pageContext.request.contextPath}/root/addAuthority"><button class="layui-btn layuiadmin-btn-list">添加</button></a>
                     </div>
 
                     <table id="LAY-app-content-list" lay-filter="LAY-app-content-list"></table>
@@ -83,7 +83,7 @@
         ,data : ${data}
         ,page: true //开启分页
         ,cols: [[ //表头
-            {field: 'id', title: 'ID', sort: true, fixed: 'left'}
+            {field: 'id', title: 'ID',width:80, sort: true, fixed: 'left'}
             ,{field: 'name', title: '名称'}
             ,{field: 'found', title: '资金规模', sort: true}
             ,{field: 'people', title: '机构人数'}
@@ -97,8 +97,8 @@
             //         else
             //             return "异常"
             //     }}
-            ,{field: 'caozuo',title: '操作',templet :function (d) {
-                return '<div class="layui-table-cell laytable-cell-1-0-7"><a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="detail"><i class="layui-icon layui-icon-search"></i>查看</a><a class="layui-btn layui-btn-danger layui-btn-xs" href="${pageContext.request.contextPath}/root/deleteAuthority?id='+ d.id +'"><i class="layui-icon layui-icon-delete"></i>删除</a> </div>'
+            ,{field: 'caozuo',title: '操作',width:240,templet :function (d) {
+                return '<a class="layui-btn layui-btn-normal layui-btn-xs" target="_blank" href="${pageContext.request.contextPath}/authority_detail?id='+ d.id+'"><i class="layui-icon layui-icon-search"></i>查看</a><a class="layui-btn layui-btn-primary layui-btn-xs" href="${pageContext.request.contextPath}/root/editAuthority?id='+ d.id +'"><i class="layui-icon layui-icon-edit"></i>编辑</a><a class="layui-btn layui-btn-danger layui-btn-xs" href="${pageContext.request.contextPath}/root/deleteAuthority?id='+ d.id +'"><i class="layui-icon layui-icon-delete"></i>删除</a>'
             }}
         ]]
     })

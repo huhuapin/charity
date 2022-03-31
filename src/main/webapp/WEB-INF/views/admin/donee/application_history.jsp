@@ -25,23 +25,7 @@
         <div class="layui-fluid">
             <div class="layui-card">
                 <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-                    <div class="layui-form-item">
-
-                        <div class="layui-inline">
-                            <label class="layui-form-label">我的申请</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="author" placeholder="请输入" autocomplete="off"
-                                       class="layui-input">
-                            </div>
-                        </div>
-
-                        <div class="layui-inline">
-                            <button class="layui-btn layuiadmin-btn-list" lay-submit
-                                    lay-filter="LAY-app-contlist-search">
-                                <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                            </button>
-                        </div>
-                    </div>
+                    我的申请
                 </div>
 
                 <div class="layui-card-body">
@@ -63,45 +47,43 @@
         var table = layui.table
             , form = layui.form;
 
-        //监听搜索
-        form.on('submit(LAY-app-contlist-search)', function (data) {
-            var field = data.field;
-
-            //执行重载
-            table.reload('LAY-app-content-list', {
-                where: field
-            });
-        });
-
         //第一个实例
         table.render({
             elem: '#LAY-app-content-list'
-            ,data : [{
-                "id": "001"
-                ,"title": "孩子们吃上了肉"
-                ,"description": "春雷行动在进行，我们争取让每个孩子都吃上饭"
-                ,"thumb": "这里是缩略图"
-                ,"content": "通过中华美食的多个侧面，来展现食物给中国人生活带来的仪式、伦理等方面的文化；见识中国特色食材以及与食物相关、构成中国美食特有气质的一系列元素；了解中华饮食文化的精致和源远流长"
-                ,"time": 20121204
-                ,"click": 858
-            }]
+            ,data : ${applications}
             ,page: true //开启分页
             ,cols: [[ //表头
-                {field: 'id', title: 'ID', sort: true, fixed: 'left'}
-                ,{field: 'title', title: '标题', sort: true}
-                ,{field: 'description', title: '描述'}
-                ,{field: 'thumb', title: '缩略图'}
-                ,{field: 'content', title: '内容'}
-                ,{field: 'uploadtime', title: '日期', sort: true}
-                ,{field: 'status', title: '点击量',sort: true}
-                ,{field: 'caozuo',title: '操作',templet :function (d) {
-                        return '<a href="${pageContext.request.contextPath}/add/'+d.id +'" class="layui-btn">添加</a>'
-
-                        // <div class="layui-table-cell laytable-cell-1-0-7"> <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a> </div>
+                {field: 'id', title: 'ID',width:80, sort: true, fixed: 'left'}
+                ,{field: 'title', title: '名称'}
+                ,{field: 'authorityName', title: '慈善机构',width:180,templet:function (d) {
+                        return'${authorityName}'
+                    }}
+                ,{field: 'target', title: '目标', sort: true}
+                ,{field: 'time', title: '起止时间',templet:function (d) {
+                        var startDate = new Date(d.start);
+                        var start = startDate.getFullYear()+'-'+(startDate.getMonth()+1)+'-'+ startDate.getDate();
+                        var endDate = new Date(d.end);
+                        var end = endDate.getFullYear()+'-'+(endDate.getMonth()+1)+'-'+ endDate.getDate();
+                        return start +' ~ '+ end
+                    }}
+                ,{field: 'donoor_num',title:'捐赠人数',width:110,sort:true}
+                ,{field: 'receive', title: '已募集',width:120}
+                ,{field: 'status', title: '状态', width:120, sort:true,templet : function (d) {
+                        switch (d.status) {
+                            case 0: return "待审核";
+                            case 1: return "未开始";
+                            case 2: return "进行中";
+                            case 3: return "已完成";
+                            case 4: return "未通过";
+                        }
+                    }}
+                ,{field: 'caozuo',title: '操作',width:160,templet :function (d) {
+                        return   (d.status==0||d.status==4)?'<a class="layui-btn layui-btn-primary layui-btn-xs" href="${pageContext.request.contextPath}/donee/editApplication?id='+d.id +'"><i class="layui-icon layui-icon-edit"></i>编辑</a>  <a class="layui-btn layui-btn-danger layui-btn-xs" href="${pageContext.request.contextPath}/donee/deleteApplication?id='+d.id +'"><i class="layui-icon layui-icon-delete"></i>删除</a>':'';
                     }}
             ]]
         })
     });
 </script>
+
 </body>
 </html>

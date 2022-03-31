@@ -8,6 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.PageContext;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 @Controller
@@ -27,7 +33,8 @@ public class RootController {
     ApplicationService applicationService;
 
     @GetMapping("index")
-    public String index(Model model) {
+    public String index(Model model, HttpServletRequest request) {
+
         int userCount = userService.count();        //用户数
         int authorityCount = authorityService.count();      //慈善机构数
         int donorCount = donorService.count();      //捐赠者
@@ -69,7 +76,12 @@ public class RootController {
 
     @PostMapping("addAuthority")
     public String add(AuthorityUser authorityUser,Model model) {
-        System.out.println(authorityUser.toString());
+
+        User selectUser = new User();
+        selectUser.setUsername(authorityUser.getUsername());
+        if (userService.queryAll(selectUser).size()>0) {
+            return "redirect:/root/manageAuthority";
+        }
         User user = new User();
         BeanUtils.copyProperties(authorityUser,user);
         user.setLastLogin(new Date());
@@ -114,13 +126,17 @@ public class RootController {
     }
 
     @GetMapping("deleteAuthority")
-    public String deleteAuthority(int id) {
-
+    public String deleteAuthority(int id, HttpServletResponse response) throws IOException {
+        PrintWriter writer = response.getWriter();
         Authority authority = authorityService.queryById(id);
-        authorityService.deleteById(id);
-        userService.deleteById(authority.getUserId());
-        return  "admin/root/manage_authority";
-
+        if (authority !=null ) {
+            authorityService.deleteById(id);
+            userService.deleteById(id);
+            writer.println("<script>alter('删除成功')</script>");
+        }else {
+            writer.println("<script>alter('机构不存在');history.go(-1)</script>");
+        }
+        return  "redirect:/root/manageAuthority";
     }
 
     @GetMapping("priority")
@@ -133,5 +149,70 @@ public class RootController {
         model.addAttribute("waitList",JacksonUtil.toJson(waitList));
         model.addAttribute("finishList",JacksonUtil.toJson(finishList));
         return "admin/root/priority";
+    }
+    @GetMapping("setPriority")
+    public String setPriority(Application application,Model model) {
+        System.out.println(application.toString());
+        try {
+            applicationService.setPriority(application);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/root/priority";
+    }
+
+    @GetMapping("info")
+    public String info() {
+        return "admin/root/info";
+    }
+
+    @PostMapping("setInfo")
+    public String setInfo(User user,String oldPassword,HttpServletRequest request,HttpServletResponse response) throws IOException {
+        User loginUser = (User)request.getSession().getAttribute("user");
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter writer = response.getWriter();
+        if (loginUser.getPassword().equals(oldPassword)) {
+            loginUser.setName(user.getName());
+            loginUser.setPassword(user.getPassword());
+            userService.update(loginUser);
+            writer.println("<script>alert('修改成功');window.location.href='"+request.getContextPath()+"/root/info'</script>");
+            return null;
+        }
+        writer.println("<script>alert('原密码错误，请重试！');history.go(-1)</script>");
+        return null;
+    }
+
+    @GetMapping("editAuthority")
+    public String editAuthority(int id,Model model) {
+        Authority authority = new Authority();
+        authority.setId(id);
+        List<Map<String,Object>> authoritys = authorityService.queryAll(authority);
+        if (authoritys.size()>0) {
+            model.addAttribute("authority",authoritys.get(0));
+            return "admin/root/edit_authority";
+        }
+        return null;
+    }
+
+    @PostMapping("updateAuthority")
+    public String updateAuthority(AuthorityUser authorityUser,HttpServletRequest request,HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("uft8");
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter writer = response.getWriter();
+        User user = new User();
+        user.setName(authorityUser.getName());
+        user.setId(authorityUser.getUserId());
+        Authority authority = new Authority();
+        BeanUtils.copyProperties(authorityUser,authority);
+        authority.setUserId(null);
+        try {
+            userService.update(user);
+            authorityService.update(authority);
+        }catch (Exception e) {
+            e.printStackTrace();
+            writer.println("<script>alert('更新失败！');history.go(-1)</script>");
+            return null;
+        }
+        return  "redirect:/root/manageAuthority";
     }
 }

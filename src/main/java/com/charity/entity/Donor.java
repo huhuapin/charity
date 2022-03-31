@@ -1,6 +1,9 @@
 package com.charity.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -21,7 +24,8 @@ public class Donor implements Serializable {
     private String email;
     
     private Integer sex;
-    
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     
     private String address;
@@ -91,6 +95,13 @@ public class Donor implements Serializable {
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+    public String getStringDate() {
+        if (this.birthday == null) {
+            return  null;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return simpleDateFormat.format(this.birthday);
     }
 
     @Override

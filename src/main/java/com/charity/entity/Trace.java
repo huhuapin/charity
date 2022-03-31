@@ -1,5 +1,6 @@
 package com.charity.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -63,4 +64,20 @@ public class Trace implements Serializable {
         this.time = time;
     }
 
+    public String getTimeString() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return simpleDateFormat.format(this.time);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Trace{");
+        sb.append("id=").append(id);
+        sb.append(", applymentId=").append(applymentId);
+        sb.append(", title='").append(title).append('\'');
+        sb.append(", content=").append(content);
+        sb.append(", time=").append(time);
+        sb.append('}');
+        return sb.toString();
+    }
 }
